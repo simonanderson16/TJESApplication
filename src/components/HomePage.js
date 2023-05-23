@@ -6,7 +6,7 @@ import {useState, useEffect} from 'react';
 
 
 export default function HomePage() {
-    const collectionName = 'user'
+    const collectionName = 'User'
     const [userCollection, setUserCollection] = useState([])
     useEffect(() => {
         getDocs(collection(db, collectionName))
@@ -17,9 +17,7 @@ export default function HomePage() {
           })
           console.log(data)
           setUserCollection(data)
-        })
-
-        
+        }) 
     },[])
       
 
