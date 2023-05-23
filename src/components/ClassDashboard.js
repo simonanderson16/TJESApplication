@@ -1,8 +1,12 @@
+
 import ClassDashboardRow from "./ClassDashboardRow";
 import "../classDashboardStyles.css"
 
-export default function ClassDashboard() {
-
+export default function ClassDashboard({classCollection, gradeCollection, userCollection}) {
+    console.log("dash,class", classCollection)
+    console.log("dash,grade", gradeCollection)
+    console.log("dash,user", userCollection)
+    
     let userType = 'admin';
 
     return (
