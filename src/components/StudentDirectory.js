@@ -17,10 +17,10 @@ export default function StudentDirectory({userCollection}) {
         if (event.key === "Enter"){
             // Prevent page refresh
             // SRC: https://stackoverflow.com/questions/50193227/basic-react-form-submit-refreshes-entire-page
-            if (enteredSearch.strip() === ""){
+            if (enteredSearch.strip() === ""){ // if they hit enter on empty field
                 setFilterSearch(false)
             }
-            else{
+            else{ // if they hit enter on non-empty field
                 setFilterSearch(true)
             }
             event.preventDefault(); 
@@ -41,7 +41,13 @@ export default function StudentDirectory({userCollection}) {
                     />
                 </form>  
             </div>
-            <StudentCollectionList studentCollection = {userCollection.filter((user) => user.userType==='student')}/> 
+            {filterSearch === true ? (<></>) : 
+            (
+            <div>
+                <StudentCollectionList studentCollection = {userCollection.filter((user) => user.userType==='student')}/> 
+            </div>
+            )
+            }
         </div>
     )
 }
