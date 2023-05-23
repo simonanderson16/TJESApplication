@@ -1,12 +1,28 @@
 import { Link, useNavigate } from "react-router-dom";
 import "../HomePageStyles.css"
-import {db} from './firebase.js'
+import {db} from '../firebase.js'
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import {useState, useEffect} from 'react';
 
 
 export default function HomePage() {
     const collectionName = 'user'
+    const [userCollection, setUserCollection] = useState([])
+    useEffect(() => {
+        getDocs(collection(db, collectionName))
+        .then((allDocs) => 
+        {let data = []
+          allDocs.forEach((doc) => {
+            data.push({...doc.data(), id:doc.id})
+          })
+          console.log(data)
+          setUserCollection(data)
+        })
+
+        
+    },[])
+      
+
     const navigate = useNavigate();
 
     const goToClassDashboard = () => {
