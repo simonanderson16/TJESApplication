@@ -1,18 +1,12 @@
 
 import Student from "./Student";
+import StudentCollectionList from "./StudentCollectionList";
 export default function StudentDirectory({userCollection}) {
-    console.log("Student directory", userCollection[0])
+    //TODO: Add search bar that searches students by email
     return (
         <div className="student-directory-container">
             <p>Student Directory</p>
-            {userCollection.map((item,index)=>
-            <div key = {index}>
-                <Student 
-                    key = {item}
-                    name = {item.firstName}
-                />
-            </div>
-        )}
+            <StudentCollectionList studentCollection = {userCollection.filter((user) => user.userType==='student')}/> 
         </div>
     )
 }
