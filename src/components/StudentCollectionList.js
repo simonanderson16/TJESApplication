@@ -1,7 +1,7 @@
 import React from 'react'
 import Student from './Student'
 function StudentCollectionList({studentCollection}) {
-  console.log("Student",studentCollection[0])
+  
   return (
     <>
         {Object.keys(studentCollection).map((key, index) => 
