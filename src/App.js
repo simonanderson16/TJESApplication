@@ -6,6 +6,7 @@ import ClassDashboard from './components/ClassDashboard';
 import StudentDirectory from './components/StudentDirectory';
 import TeacherDirectory from './components/TeacherDirectory';
 import Calendar from './components/Calendar';
+import ClassPage from './components/ClassPage';
 import Navbar from './components/Navbar';
 
 import {db} from './firebase.js'
@@ -63,6 +64,7 @@ function App() {
           <Route path="/students" element={<StudentDirectory userCollection = {userCollection}/>} />
           <Route path="/teachers" element={<TeacherDirectory userCollection ={userCollection}/>} />
           <Route path="/calendar" element={<Calendar/>} />
+          <Route path="/classPage" element={<ClassPage classCollection = {classCollection} userCollection = {userCollection} gradeCollection = {gradeCollection}/>}/>
         </Routes>
       </BrowserRouter>
     </div>
