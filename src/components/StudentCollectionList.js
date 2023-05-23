@@ -1,9 +1,14 @@
 import React from 'react'
 import Student from './Student'
 function StudentCollectionList({studentCollection}) {
-  
+  console.log("result",studentCollection)
   return (
     <>
+      {studentCollection.length === 0 ? 
+      (<>
+        <h1>No Results</h1>
+      </>):(
+        <>
         {Object.keys(studentCollection).map((key, index) => 
             <div key = {index}>
                 <Student 
@@ -15,6 +20,9 @@ function StudentCollectionList({studentCollection}) {
                 />
             </div>  
         )}
+        </>
+      )}
+        
     </>
   )
 }
