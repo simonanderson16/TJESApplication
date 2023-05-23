@@ -1,0 +1,25 @@
+.calendar-component {
+    justify-content: center;
+    align-items: center;
+}
+
+.calendarDay {
+    background: none;
+    border: 5;
+    height: 100px;
+    width: 100px;
+}
+
+#event-info {
+    border: 0.5px solid black;
+    /* justify-content: center;
+    align-items: center; */
+}
+
+#event-info-left {
+    width: 500px;
+}
+
+#event-info-right {
+    width: 500px;
+}
