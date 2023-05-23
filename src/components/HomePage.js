@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import "../HomePageStyles.css"
+import {db} from './firebase.js'
 
 export default function HomePage() {
-
+    
     const navigate = useNavigate();
 
     const goToClassDashboard = () => {
