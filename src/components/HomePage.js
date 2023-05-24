@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { user } from '../App.js';
 import "../HomePageStyles.css"
 
 export default function HomePage() {
