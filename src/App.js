@@ -1,11 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import HomePage from './components/HomePage';
 import ClassDashboard from './components/ClassDashboard';
 import StudentDirectory from './components/StudentDirectory';
 import TeacherDirectory from './components/TeacherDirectory';
-import Calendar from './components/Calendar';
+import Calendar from './components/Calendar/Calendar';
 import Navbar from './components/Navbar';
 
 import {db} from './firebase.js'

@@ -1,7 +1,7 @@
 import './Calendar.css';
 import { useState, useEffect } from 'react';
 import { doc, setDoc, getDocs, collection } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '../../firebase';
 import CalendarMonth from './CalendarMonth';
 
 function Calendar() {
