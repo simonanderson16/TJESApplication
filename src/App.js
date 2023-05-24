@@ -13,7 +13,13 @@ import { collection, doc, getDoc, getDocs, query, where } from "firebase/firesto
 import { getAuth } from "firebase/auth";
 import { useState, useEffect } from 'react';
 
-let user;
+const getUser = async () => {
+  if (!getAuth().currentUser) {
+    return false;
+  }
+  const response = await getDocs(query(collection(db, 'User'), where('uid', "==", getAuth().currentUser.uid.toString())));
+  return { id: response.docs?.[0].id, userObject: response.docs?.[0].data() };
+}
 
 function App() {
   const collectionName = 'User';
@@ -32,16 +38,7 @@ function App() {
       })
   }, [])
 
-  const getIsAdmin = async () => {
-    if(!getAuth().currentUser) {
-      return false;
-    }
-    const response = await getDocs(query(collection(db, 'User'), where('uid', "==", getAuth().currentUser.uid.toString())));
-    user = { id: response.docs?.[0].id, userObject: response.docs?.[0].data()};
-    return user.userObject.userType === 'admin';
-  }
-
-  let isAdmin = getIsAdmin();
+  let isAdmin = getUser()?.userObject?.userType === 'admin';
 
   const collectionName2 = 'Class'
   const [classCollection, setClassCollection] = useState([])
@@ -82,8 +79,7 @@ function App() {
             <Route path='class/:id' element={<HomePage />}></Route>
           </Route>
           <Route path="/students" element={<StudentDirectory
-            userCollection={userCollection}
-            isAdmin={isAdmin} />} />
+            userCollection={userCollection} />} />
           <Route path="/teachers" element={<TeacherDirectory userCollection={userCollection} />} />
           <Route path="/calendar" element={<Calendar />} />
         </Routes>
@@ -93,4 +89,4 @@ function App() {
 }
 
 export default App;
-export { user };
+export { getUser };

@@ -2,8 +2,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 
-function UserBuilder({ userType }) {
-    //console.log(getAuth());
+function UserBuilder({ isStudent }) {
     return (
         <>
             <form id="userbuilder-form">
@@ -17,33 +16,33 @@ function UserBuilder({ userType }) {
                 <input id="userbuilder-address" />
                 <p>User Birthday:</p>
                 <input id="userbuilder-birthday" type="date" />
-                <p>Set User Password:</p>
-                <input id="userbuilder-password" type="password" />
+                <p hidden={isStudent}>Set User Password:</p>
+                <input hidden={isStudent} id="userbuilder-password" type="password" />
                 <p id="userbuilder-error-message"></p>
             </form>
             <div>
                 <button id="userbuilder-submit" onClick={async () => {
-                    const auth = getAuth();
+                    const auth = isStudent ? null : getAuth();
                     const email = document.getElementById('userbuilder-email').value;
-                    const password = document.getElementById('userbuilder-password').value
-                    try{
-                        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    const password = isStudent ? null : document.getElementById('userbuilder-password').value
+                    try {
+                        const userCredential = isStudent ? null : await createUserWithEmailAndPassword(auth, email, password);
                         setDoc(doc(db, 'User', Math.random().toString()), {
                             firstName: document.getElementById('userbuilder-firstname').value,
                             lastName: document.getElementById('userbuilder-lastname').value,
                             emailAddress: email,
                             address: document.getElementById('userbuilder-address').value,
                             birthday: document.getElementById('userbuilder-birthday').value,
-                            userType: userType,
-                            uid: userCredential.user.uid
+                            userType: isStudent ? 'student' : 'teacher',
+                            uid: isStudent ? '' : userCredential.user.uid
                         });
                         document.getElementById('userbuilder-form').submit();
-                    } catch(error) {
+                    } catch (error) {
                         document.getElementById('userbuilder-error-message').innerHTML = error;
                     }
                 }}>Save</button>
                 <button id="userbuilder-discard" onClick={() => document.getElementById('userbuilder-form').submit()}>Discard</button>
-            </div>
+            </div >
         </>
     );
 }
