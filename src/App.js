@@ -1,11 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import HomePage from './components/HomePage';
 import ClassDashboard from './components/ClassDashboard';
 import StudentDirectory from './components/StudentDirectory';
 import TeacherDirectory from './components/TeacherDirectory';
-import Calendar from './components/Calendar';
+import Calendar from './components/Calendar/Calendar';
 import Navbar from './components/Navbar';
 import Login from './components/Login'
 
@@ -61,7 +60,10 @@ function App() {
       <Navbar/>
         <Routes>
           <Route path="/" element={<HomePage/>} />
-          <Route path="classes" element={<ClassDashboard classCollection = {classCollection} userCollection = {userCollection} gradeCollection = {gradeCollection}/>} />
+          <Route path="classes">
+            <Route index element={<ClassDashboard classCollection = {classCollection} userCollection = {userCollection} gradeCollection = {gradeCollection}/>}/>
+            <Route path='class/:id' element={<HomePage/>}></Route>
+          </Route>
           <Route path="/students" element={<StudentDirectory userCollection = {userCollection}/>} />
           <Route path="/teachers" element={<TeacherDirectory userCollection ={userCollection}/>} />
           <Route path="/calendar" element={<Calendar/>} />
