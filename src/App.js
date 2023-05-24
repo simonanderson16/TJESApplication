@@ -7,6 +7,7 @@ import StudentDirectory from './components/StudentDirectory';
 import TeacherDirectory from './components/TeacherDirectory';
 import Calendar from './components/Calendar';
 import Navbar from './components/Navbar';
+import Login from './components/Login'
 
 import {db} from './firebase.js'
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
@@ -55,6 +56,7 @@ function App() {
     },[])  
   return (
     <div className='App'>
+      <Login></Login>
       <BrowserRouter>
       <Navbar/>
         <Routes>
