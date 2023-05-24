@@ -7,14 +7,17 @@ import {db} from "../firebase.js"
 export default function StudentDirectory({userCollection}) {
     //TODO: Add search bar that searches students by email
     // TODO: Make "add student" which is only viewable by an admin
-    const [searchString, setSearchString] = useState('');
+    const [searchString, setSearchString] = useState('')
     const [filterSearch, setFilterSearch] = useState(false);
     const [filteredCollection, setFilteredCollection] = useState([])
+
 
     //function where if user hits enter on textarea, 
     const handleSearch = async (event) => {
         setSearchString(event.target.value)
+        console.log(searchString)
         
+   
     }
     
       const handleEnteredSearch = async (event) => {
@@ -22,8 +25,8 @@ export default function StudentDirectory({userCollection}) {
             // Prevent page refresh
             // SRC: https://stackoverflow.com/questions/50193227/basic-react-form-submit-refreshes-entire-page
             event.preventDefault(); 
-            console.log("string", searchString)
-            const q = query(collection(db, "User"), where("userType", "==", "student" ), where("firstName", "<=", searchString));
+            let nameArray = searchString.split(' ')
+            const q = query(collection(db, "User"),where("firstName", "in", nameArray), where("userType", "==", "student" ) );
             let data = []
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
@@ -60,9 +63,13 @@ export default function StudentDirectory({userCollection}) {
                 {searchString}
             </div>
 
-            {filterSearch === true? 
-            (<><StudentCollectionList studentCollection={filteredCollection}/></>):
-            (<><StudentCollectionList studentCollection={userCollection.filter((user) => user.userType==='student')}/></>)}
+            {filterSearch === true ? 
+            (<div className = "studentContainer">
+                <StudentCollectionList studentCollection={filteredCollection}/>
+            </div>):
+            (<div className = "studentContainer">
+                <StudentCollectionList studentCollection={userCollection.filter((user) => user.userType==='student')}/>
+            </div>)}
 
             
         </div>
