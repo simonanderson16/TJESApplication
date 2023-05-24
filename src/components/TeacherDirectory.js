@@ -53,11 +53,22 @@ export default function TeacherDirectory({ userCollection }) {
     }
 
     getIsAdmin();
+    const buttonStyle = {
+        border: 'none',
+        borderRadius: '5px',
+        padding: '10px',
+        backgroundColor: 'rgb(34, 34, 78)',
+        color: '#eee',
+        cursor: 'pointer',
+        transition: 'all 0.4s ease'
+      };
+
+
 
     return (
-        <div >
+        <div className="teacher-directory-container">
             <h1>Teacher Directory</h1>
-            <button hidden={!isAdmin} onClick={() => setBuildingUser(true)}>Add Teacher</button>
+            <button style={buttonStyle} hidden={!isAdmin} onClick={() => setBuildingUser(true)}>Add Teacher</button>
             <div hidden={!buildingUser}>
                 <UserBuilder
                     isStudent={false}
