@@ -4,11 +4,50 @@ import "../classDashboardStyles.css"
 import { useEffect, useReducer, useRef, useState } from "react";
 import { collection, query, where, getDocs, addDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
+import { getUser } from "../App";
 
 export default function ClassDashboard({classCollection, gradeCollection, userCollection}) {
 
-    let userType = 'admin';
-    let userID = '7c07MnIzeKYIxaIwjAZR'; // ID for john doe
+    const [currentUser, setCurrentUser] = useState();
+    const [userType, setUserType] = useState();
+    const [userID, setUserID] = useState();
+
+
+
+    useEffect(() => {
+        const getUserData = async () => {
+            let user = await getUser();
+            setCurrentUser(user)
+        }
+        getUserData();
+        console.log(currentUser)
+    }, [])
+
+    useEffect(() => {
+        if(currentUser) {
+            setUserType(currentUser.userObject.userType);
+            setUserID(currentUser.id);
+            window.addEventListener('beforeunload', function(event) {
+                localStorage.setItem("userID", currentUser.id);
+                localStorage.setItem("userType", currentUser.userObject.userType);
+            })
+        }
+    }, [currentUser])
+
+useEffect(() => {
+  const storedUserID = localStorage.getItem("userID");
+  const storedUserType = localStorage.getItem("userType");
+  if (storedUserID && storedUserType) {
+    setUserID(storedUserID);
+    setUserType(storedUserType);
+  }
+}, []);
+
+    console.log("current user" , currentUser)
+    // const userType = currentUser.userObject.userType;
+    // const userID = currentUser.id;
+    // let userType = 'admin';
+    // let userID = '7c07MnIzeKYIxaIwjAZR';
 
 
     useEffect(() => {
