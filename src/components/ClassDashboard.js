@@ -84,6 +84,7 @@ export default function ClassDashboard({classCollection, gradeCollection, userCo
             }
             event.preventDefault(); 
         }
+        console.log("classCollection",Object.keys(classCollection))
         return false
       }
 
@@ -143,16 +144,20 @@ export default function ClassDashboard({classCollection, gradeCollection, userCo
             : null
             }
             {filterSearch === true ? 
-                (Object.keys((classCollection).filter((classItem) => classItem.name === searchString)).map((item,index)=>
+                (Object.keys((classCollection).filter((classItem) => classItem.name === "Art")).map((item,index)=>
                     <div key = {index}>
+                        <div>filter - True</div>
+                        {searchString}|{item}
                         <ClassDashboardRow name={classCollection[item].name} teacher={classCollection[item].teacher}/>
                     </div>
                 )) 
-                : userType === 'teacher' ?
+                : 
+                (userType === 'teacher' ?
                     (//user is a teacher
                     Object.keys(classCollection).map((item,index)=> {
                     return classCollection[item].teacher.id === userID ?
                     <div key = {index}>
+                        <>True</>
                         <ClassDashboardRow name={classCollection[item].name} teacher={classCollection[item].teacher}/>
                     </div>
                     : null
@@ -161,9 +166,11 @@ export default function ClassDashboard({classCollection, gradeCollection, userCo
                     (//user is an admin and has not searched
                     Object.keys(classCollection).map((item,index)=>
                     <div key = {index}>
+                        <>Admin</>
                         <ClassDashboardRow name={classCollection[item].name} teacher={classCollection[item].teacher}/>
                     </div>
                     ))
+                )
             }
             {/* {Object.keys(classCollection).map((item,index)=>
                 <div key = {index}>
