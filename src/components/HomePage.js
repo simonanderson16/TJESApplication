@@ -4,8 +4,8 @@ import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import {useState, useEffect} from 'react';
 
 export default function HomePage() {
-    
-      
+
+
 
     const navigate = useNavigate();
 
