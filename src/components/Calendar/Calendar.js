@@ -2,10 +2,20 @@ import './Calendar.css';
 import { useState, useEffect } from 'react';
 import { doc, setDoc, getDocs, collection } from 'firebase/firestore';
 import { db } from '../../firebase';
+import { getUser } from '../../App';
 import CalendarMonth from './CalendarMonth';
 
 function Calendar() {
     const [events, setEvents] = useState([]);
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    const getIsAdmin = async () => {
+        const response = await getUser();
+        if (response?.userObject?.userType === 'admin')
+            setIsAdmin(true);
+        else
+            setIsAdmin(false);
+    }
 
     const getEvents = async () => {
         const documents = await getDocs(collection(db, 'Event'));
@@ -47,10 +57,12 @@ function Calendar() {
         getEvents();
     }, []);
 
+    getIsAdmin();
+
     return (
         <div className="calendar-container">
             <h1>Calendar</h1>
-            <button className='calendar-edit-buttons' onClick={async () => {
+            <button className='calendar-edit-buttons' hidden={!isAdmin} onClick={async () => {
                 //Need to ensure no collisions
                 const id = Math.random().toString();
                 await setDoc(doc(db, 'Event', id), {
@@ -67,6 +79,7 @@ function Calendar() {
                     month={months.month}
                     year={months.year}
                     events={months.schedule}
+                    isAdmin={isAdmin}
                 ></CalendarMonth>
             })}
         </div>

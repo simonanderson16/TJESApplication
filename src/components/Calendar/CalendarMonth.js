@@ -1,6 +1,6 @@
 import CalendarItem from './CalendarItem';
 
-function CalendarMonth({ month, year, events }) {
+function CalendarMonth({ month, year, events, isAdmin }) {
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 
     return (
@@ -17,6 +17,7 @@ function CalendarMonth({ month, year, events }) {
                     isAllDay={event.isAllDay}
                     location={event.location}
                     callRerender={event.callRerender}
+                    isAdmin={isAdmin}
                 ></CalendarItem>);
             })}
         </>
