@@ -8,7 +8,7 @@ import Navbar from './components/Navbar';
 import Login from './components/Login'
 
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { db } from './firebase.js'
+import { db } from './firebase.js';
 import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { useState, useEffect } from 'react';
