@@ -1,0 +1,29 @@
+.userContainer {
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1vh;
+    height: 10vh;
+    border-radius: 15px;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    border: none;
+    padding: 0 100px 0 100px;
+}
+
+.userContainer:hover {
+    background-color: rgb(206, 206, 240);
+}
+
+.add-class-box {
+    background-color: #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1vh;
+    padding: 3vh;
+    border-radius: 15px;
+    transition: all 0.4s ease;
+    border: none;
+}

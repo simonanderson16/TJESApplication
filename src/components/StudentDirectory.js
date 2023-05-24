@@ -5,6 +5,7 @@ import { getFirestore, getDocs, collection, where, query, getDoc } from "firebas
 import { db } from "../firebase.js";
 import { getAuth } from "firebase/auth";
 import { getUser } from "../App";
+import "./Directory.css"
 
 export default function StudentDirectory({ userCollection }) {
     //TODO: Add search bar that searches students by email
@@ -77,10 +78,10 @@ export default function StudentDirectory({ userCollection }) {
                 {searchString}
             </div>
             {filterSearch === true ?
-                (<div className="studentContainer">
+                (<div className="studentContaine">
                     <StudentCollectionList studentCollection={filteredCollection} />
                 </div>) :
-                (<div className="studentContainer">
+                (<div className="studentContaine">
                     <StudentCollectionList studentCollection={userCollection.filter((user) => user.userType === 'student')} />
                 </div>)}
         </div>
