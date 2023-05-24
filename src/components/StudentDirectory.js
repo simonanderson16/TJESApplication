@@ -1,22 +1,36 @@
 
 import StudentCollectionList from "./StudentCollectionList";
 import {useState, useEffect} from 'react'
+import { getFirestore, getDocs, collection, where, query } from "firebase/firestore"; 
+import {db} from "../firebase.js"
 
 export default function StudentDirectory({userCollection}) {
     //TODO: Add search bar that searches students by email
     // TODO: Make "add student" which is only viewable by an admin
     const [searchString, setSearchString] = useState('');
     const [filterSearch, setFilterSearch] = useState(false);
+    const [filteredCollection, setFilteredCollection] = useState([])
 
     //function where if user hits enter on textarea, 
-    const handleSearch = (event) => {
+    const handleSearch = async (event) => {
         setSearchString(event.target.value)
+        
     }
     
-      const handleEnteredSearch = (event) => {
+      const handleEnteredSearch = async (event) => {
         if (event.key === "Enter"){
             // Prevent page refresh
             // SRC: https://stackoverflow.com/questions/50193227/basic-react-form-submit-refreshes-entire-page
+            event.preventDefault(); 
+            console.log("string", searchString)
+            const q = query(collection(db, "User"), where("userType", "==", "student" ), where("firstName", "<=", searchString));
+            let data = []
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+                data.push(doc.data())
+            });
+            console.log("Data",data)
+            setFilteredCollection(data)
             if (searchString.trim() === ''){ // if they hit enter on empty field
                 setFilterSearch(false)
                 event.preventDefault();
@@ -25,10 +39,10 @@ export default function StudentDirectory({userCollection}) {
                 setFilterSearch(true)
                 event.preventDefault();
             }
-            event.preventDefault(); 
         }
-        return false
       }
+
+
     return (
         <div className="student-directory-container">
             <h1>Student Directory</h1>
@@ -45,14 +59,12 @@ export default function StudentDirectory({userCollection}) {
                 </form>  
                 {searchString}
             </div>
-            {filterSearch === true ? 
-            (<>
-                <StudentCollectionList studentCollection = {userCollection.filter((user) => user.firstName === searchString)}/> 
-            </>) : 
-            (<>
-                <StudentCollectionList studentCollection = {userCollection.filter((user) => user.userType==='student')}/> 
-            </>)
-            }
+
+            {filterSearch === true? 
+            (<><StudentCollectionList studentCollection={filteredCollection}/></>):
+            (<><StudentCollectionList studentCollection={userCollection.filter((user) => user.userType==='student')}/></>)}
+
+            
         </div>
     )
 }
