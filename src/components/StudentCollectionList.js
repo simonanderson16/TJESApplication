@@ -1,7 +1,7 @@
 import React from 'react'
 import Student from './Student'
 function StudentCollectionList({studentCollection}) {
-  console.log("result",studentCollection)
+  //console.log("result",studentCollection)
   return (
     <>
       {studentCollection.length === 0 ? 

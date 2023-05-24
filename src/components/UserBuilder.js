@@ -3,6 +3,7 @@ import { db } from "../firebase";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 
 function UserBuilder({ userType }) {
+    //console.log(getAuth());
     return (
         <>
             <form id="userbuilder-form">
