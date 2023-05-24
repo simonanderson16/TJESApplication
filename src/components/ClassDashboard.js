@@ -151,7 +151,7 @@ export default function ClassDashboard({classCollection, gradeCollection, userCo
                 : userType === 'teacher' ?
                     (//user is a teacher
                     Object.keys(classCollection).map((item,index)=> {
-                    return classCollection[item].teacher.id == userID ?
+                    return classCollection[item].teacher.id === userID ?
                     <div key = {index}>
                         <ClassDashboardRow name={classCollection[item].name} teacher={classCollection[item].teacher}/>
                     </div>
