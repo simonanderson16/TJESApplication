@@ -1,8 +1,14 @@
 import React from 'react'
 
-function Student({name, email, address, birthday}) {
+function Student({firstname, lastname, email, address, birthday}) {
+
+
+  // TODO: Need to hide some information based on who is logged in 
   return (
-    <div>Student: {name}</div>
+    <>
+      <h3>Student: {firstname} {lastname}</h3>
+      <p>{email}</p>
+    </>
   )
 }
 
