@@ -59,7 +59,10 @@ function App() {
       <Navbar/>
         <Routes>
           <Route path="/" element={<HomePage/>} />
-          <Route path="classes" element={<ClassDashboard classCollection = {classCollection} userCollection = {userCollection} gradeCollection = {gradeCollection}/>} />
+          <Route path="classes">
+            <Route index element={<ClassDashboard classCollection = {classCollection} userCollection = {userCollection} gradeCollection = {gradeCollection}/>}/>
+            <Route path='class/:id' element={<HomePage/>}></Route>
+          </Route>
           <Route path="/students" element={<StudentDirectory userCollection = {userCollection}/>} />
           <Route path="/teachers" element={<TeacherDirectory userCollection ={userCollection}/>} />
           <Route path="/calendar" element={<Calendar/>} />
