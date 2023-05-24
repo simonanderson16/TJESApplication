@@ -5,6 +5,7 @@ import { getFirestore, getDocs, collection, where, query, getDoc } from "firebas
 import { db } from "../firebase.js";
 import { getAuth } from "firebase/auth";
 import { getUser } from "../App";
+import "./Directory.css"
 
 export default function StudentDirectory({ userCollection }) {
     //TODO: Add search bar that searches students by email
@@ -51,13 +52,28 @@ export default function StudentDirectory({ userCollection }) {
             }
         }
     }
-
+    const buttonStyle = {
+        border: 'none',
+        borderRadius: '5px',
+        padding: '10px',
+        backgroundColor: 'rgb(34, 34, 78)',
+        color: '#eee',
+        cursor: 'pointer',
+        transition: 'all 0.4s ease'
+      };
     getIsAdmin();
 
     return (
-        <div className="student-directory-container">
+        <div >
             <h1>Student Directory</h1>
-            <button hidden={!isAdmin} onClick={() => setBuildingUser(true)}>Add Student</button>
+            <button style={{border: 'none',
+                            borderRadius: '5px',
+                            padding: '10px',
+                            backgroundColor: 'rgb(34, 34, 78)',
+                            color: '#eee',
+                            cursor: 'pointer',
+                            transition: 'all 0.4s ease'}} 
+                    hidden={!isAdmin} onClick={() => setBuildingUser(true)}>Add Student</button>
             <div hidden={!buildingUser}>
                 <UserBuilder
                     isStudent={true}
@@ -77,10 +93,10 @@ export default function StudentDirectory({ userCollection }) {
                 {searchString}
             </div>
             {filterSearch === true ?
-                (<div className="studentContainer">
+                (<div className="studentContain">
                     <StudentCollectionList studentCollection={filteredCollection} />
                 </div>) :
-                (<div className="studentContainer">
+                (<div className="studentContain">
                     <StudentCollectionList studentCollection={userCollection.filter((user) => user.userType === 'student')} />
                 </div>)}
         </div>

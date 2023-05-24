@@ -10,11 +10,11 @@ function TeacherCollectionList({teacherCollection}) {
       </>):(
         <>
         {Object.keys(teacherCollection).map((key, index) => 
-            <div key = {index}>
+            <div key = {index} className = "userContainer">
                 <Teacher 
                     firstname = {teacherCollection[key].firstName}
                     lastname = {teacherCollection[key].lastName}
-                    email = {teacherCollection[key].email}
+                    emailAddress = {teacherCollection[key].emailAddress}
                     address = {teacherCollection[key].address}
                     birthday = {teacherCollection[key].birthday}
                 />
