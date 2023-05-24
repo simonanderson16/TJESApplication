@@ -7,14 +7,9 @@ import { db } from "../firebase";
 
 export default function ClassDashboard({classCollection, gradeCollection, userCollection}) {
 
-    let userType = 'teacher';
+    let userType = 'admin';
     let userID = '7c07MnIzeKYIxaIwjAZR'; // ID for john doe
 
-    classCollection.forEach((singleClass) => {
-        if(singleClass.teacher.id === userID) {
-            console.log(singleClass.name);
-        }
-    })
 
     useEffect(() => {
         const getClassesForTeacher = async() => {
@@ -30,7 +25,7 @@ export default function ClassDashboard({classCollection, gradeCollection, userCo
     const [addingClass, setAddingClass] = useState(false);
     const [currentTeacherSelection, setCurrentTeacherSelection] = useState();
     const [addClassName, setAddClassName] = useState();
-
+    const [filteredCollection, setFilteredCollection] = useState([])
 
     const handleAddClassButton = (event) => {
         setAddingClass(true);
@@ -84,11 +79,15 @@ export default function ClassDashboard({classCollection, gradeCollection, userCo
                 event.preventDefault();
             }
             else{ // if they hit enter on non-empty field
+                let tmp = classCollection.filter((item)=>item.name === searchString)
+                setFilteredCollection(tmp)
+                console.log("classCollection", tmp)
                 setFilterSearch(true)
                 event.preventDefault();
             }
             event.preventDefault(); 
         }
+        
         return false
       }
 
@@ -148,15 +147,16 @@ export default function ClassDashboard({classCollection, gradeCollection, userCo
             : null
             }
             {filterSearch === true ? 
-                (Object.keys((classCollection).filter((classItem) => classItem.name === searchString)).map((item,index)=>
+                (Object.keys(filteredCollection).map((item,index)=>
                     <div key = {index}>
-                        <ClassDashboardRow name={classCollection[item].name} teacher={classCollection[item].teacher}/>
+                        <ClassDashboardRow name={filteredCollection[item].name} teacher={filteredCollection[item].teacher}/>
                     </div>
                 )) 
-                : userType === 'teacher' ?
+                : 
+                (userType === 'teacher' ?
                     (//user is a teacher
                     Object.keys(classCollection).map((item,index)=> {
-                    return classCollection[item].teacher.id == userID ?
+                    return classCollection[item].teacher.id === userID ?
                     <div key = {index}>
                         <ClassDashboardRow name={classCollection[item].name} teacher={classCollection[item].teacher}/>
                     </div>
@@ -169,6 +169,7 @@ export default function ClassDashboard({classCollection, gradeCollection, userCo
                         <ClassDashboardRow name={classCollection[item].name} teacher={classCollection[item].teacher}/>
                     </div>
                     ))
+                )
             }
             {/* {Object.keys(classCollection).map((item,index)=>
                 <div key = {index}>
