@@ -7,14 +7,9 @@ import { db } from "../firebase";
 
 export default function ClassDashboard({classCollection, gradeCollection, userCollection}) {
 
-    let userType = 'teacher';
+    let userType = 'admin';
     let userID = '7c07MnIzeKYIxaIwjAZR'; // ID for john doe
 
-    classCollection.forEach((singleClass) => {
-        if(singleClass.teacher.id === userID) {
-            console.log(singleClass.name);
-        }
-    })
 
     useEffect(() => {
         const getClassesForTeacher = async() => {
