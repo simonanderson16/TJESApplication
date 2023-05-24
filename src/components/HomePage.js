@@ -3,7 +3,7 @@ import "../HomePageStyles.css"
 
 export default function HomePage() {
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
     const goToClassDashboard = () => {
         navigate("/classes");
