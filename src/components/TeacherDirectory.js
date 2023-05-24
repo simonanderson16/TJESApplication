@@ -57,7 +57,7 @@ export default function TeacherDirectory({ userCollection }) {
     return (
         <div >
             <h1>Teacher Directory</h1>
-            <button className="add-class-box" hidden={!isAdmin} onClick={() => setBuildingUser(true)}>Add Teacher</button>
+            <button hidden={!isAdmin} onClick={() => setBuildingUser(true)}>Add Teacher</button>
             <div hidden={!buildingUser}>
                 <UserBuilder
                     isStudent={false}
