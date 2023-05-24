@@ -1,10 +1,48 @@
 import {collection, getDocs} from "firebase/firestore"
-import {doc, updateDoc} from "firebase/firestore"
+import {doc, getDoc} from "firebase/firestore"
 import {useEffect, useState} from 'react'
+import { useParams } from "react-router-dom";
+import {db} from "../firebase"
+import ClassPageNames from "./ClassPageNames"
 
 
-export default function ClassPage({userCollection, classCollection, gradeCollection}){
-    let userType = 'student';
+
+/*
+const [gradeCollection, setGradeCollection] = useState([])
+    useEffect(() => {
+        getDocs(collection(db, collectionName3))
+        .then((allDocs) => 
+        {let data = []
+          allDocs.forEach((doc) => {
+            data.push({...doc.data(), id:doc.id})
+          })
+          console.log(data)
+          setGradeCollection(data)
+        }) 
+    },[])  
+*/
+export default function ClassPage({userCollection, classCollection}){
+    const [isDocSnap, setDocSnap] = useState();
+    const classID = useParams().id;
+    const docRef = doc(db, "Class", classID)
+    const [isUsers, setUsers] = useState([]);
+    useEffect(() => {
+        const data = async() => {
+            console.log("hey")
+            const dataGrab = await getDoc(docRef)
+            if(dataGrab.exists()){
+                setDocSnap(dataGrab.data())
+            }
+            else{
+                console.log("no doc yet bucko")
+            }
+        };
+        data();
+        if(userCollection){
+            setUsers(userCollection)
+        }
+    },[userCollection])
+    
     function studentsGrade(){
 
     }
@@ -17,16 +55,6 @@ export default function ClassPage({userCollection, classCollection, gradeCollect
             }
         }
 
-    }
-
-    function listOfStudents(){
-
-    }
-
-    function classTitle(){
-        console.log(classCollection)
-        let title = classCollection[0].name;
-        return title;
     }
 
     //Teacher function
@@ -43,17 +71,15 @@ export default function ClassPage({userCollection, classCollection, gradeCollect
     function editStudents(){
 
     }
-
     return(
         <div className="class-page-container">
-            <div className="class-title-teacher-container">
-                <h1 style={{float: "left", display: "inline-block"}} >t</h1>
-                <h1 style={{float: "right", display: "inline-block"}} >t</h1>
-            </div>
-            <div className="student-list-container">
-
-            </div>
+        <div className="class-title-teacher-container">
+             <ClassPageNames document={isDocSnap} userCollection={isUsers}/>
         </div>
+        <div className="student-list-container">
+
+        </div>
+    </div>
     )
 
 }
