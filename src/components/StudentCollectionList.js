@@ -14,7 +14,7 @@ function StudentCollectionList({studentCollection}) {
                 <Student 
                     firstname = {studentCollection[key].firstName}
                     lastname = {studentCollection[key].lastName}
-                    email = {studentCollection[key].email}
+                    emailAddress = {studentCollection[key].emailAddress}
                     address = {studentCollection[key].address}
                     birthday = {studentCollection[key].birthday}
                 />
