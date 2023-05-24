@@ -21,8 +21,9 @@ export default function TeacherDirectory({userCollection}) {
             // Prevent page refresh
             // SRC: https://stackoverflow.com/questions/50193227/basic-react-form-submit-refreshes-entire-page
             event.preventDefault(); 
-            console.log("string", searchString)
-            const q = query(collection(db, "User"), where("userType", "==", "teacher" ), where("firstName", "<=", searchString));
+            let nameArray = searchString.split(' ')
+            const q = query(collection(db, "User"),where("firstName", "in", nameArray), where("userType", "==", "teacher" ) );
+            
             let data = []
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {

@@ -25,8 +25,8 @@ export default function StudentDirectory({userCollection}) {
             // Prevent page refresh
             // SRC: https://stackoverflow.com/questions/50193227/basic-react-form-submit-refreshes-entire-page
             event.preventDefault(); 
-            let tempArray = searchString.split(' ')
-            const q = query(collection(db, "User"),where("firstName", "in", tempArray), where("userType", "==", "student" ) );
+            let nameArray = searchString.split(' ')
+            const q = query(collection(db, "User"),where("firstName", "in", nameArray), where("userType", "==", "student" ) );
             let data = []
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
@@ -65,11 +65,9 @@ export default function StudentDirectory({userCollection}) {
 
             {filterSearch === true ? 
             (<div className = "studentContainer">
-                <div>True</div>
                 <StudentCollectionList studentCollection={filteredCollection}/>
             </div>):
             (<div className = "studentContainer">
-                <div>False</div>
                 <StudentCollectionList studentCollection={userCollection.filter((user) => user.userType==='student')}/>
             </div>)}
 
