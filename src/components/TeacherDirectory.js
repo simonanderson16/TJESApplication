@@ -52,7 +52,6 @@ export default function TeacherDirectory({ userCollection }) {
         }
     }
 
-    getIsAdmin();
     const buttonStyle = {
         border: 'none',
         borderRadius: '5px',
@@ -61,7 +60,9 @@ export default function TeacherDirectory({ userCollection }) {
         color: '#eee',
         cursor: 'pointer',
         transition: 'all 0.4s ease'
-      };
+    };
+    getIsAdmin();
+    
 
 
 

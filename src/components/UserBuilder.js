@@ -3,6 +3,8 @@ import { db } from "../firebase";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 
 function UserBuilder({ isStudent }) {
+
+    
     return (
         <>
             <form id="userbuilder-form">
@@ -21,7 +23,14 @@ function UserBuilder({ isStudent }) {
                 <p id="userbuilder-error-message"></p>
             </form>
             <div>
-                <button id="userbuilder-submit" onClick={async () => {
+                <button style={{border: 'none',
+                                borderRadius: '5px',
+                                padding: '10px',
+                                backgroundColor: 'rgb(34, 34, 78)',
+                                color: '#eee',
+                                cursor: 'pointer',
+                                transition: 'all 0.4s ease'}} 
+                        id="userbuilder-submit" onClick={async () => {
                     const auth = isStudent ? null : getAuth();
                     const email = document.getElementById('userbuilder-email').value;
                     const password = isStudent ? null : document.getElementById('userbuilder-password').value
@@ -41,7 +50,14 @@ function UserBuilder({ isStudent }) {
                         document.getElementById('userbuilder-error-message').innerHTML = error;
                     }
                 }}>Save</button>
-                <button id="userbuilder-discard" onClick={() => document.getElementById('userbuilder-form').submit()}>Discard</button>
+                <button style = {{border: 'none',
+                                borderRadius: '5px',
+                                padding: '10px',
+                                backgroundColor: 'rgb(34, 34, 78)',
+                                color: '#eee',
+                                cursor: 'pointer',
+                                transition: 'all 0.4s ease'}}
+                        id="userbuilder-discard" onClick={() => document.getElementById('userbuilder-form').submit()}>Discard</button>
             </div >
         </>
     );
