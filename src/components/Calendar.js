@@ -1,95 +1,76 @@
 import './Calendar.css';
 import { useState, useEffect } from 'react';
-import { getDocs, collection } from 'firebase/firestore';
+import { doc, setDoc, getDocs, collection } from 'firebase/firestore';
 import { db } from '../firebase';
-import CalendarItem from './CalendarItem';
-import FluxCalendarItem from './FluxCalendarItem';
+import CalendarMonth from './CalendarMonth';
 
-export default function Calendar() {
+function Calendar() {
     const [events, setEvents] = useState([]);
 
-    useEffect(() => {
-        const getEvents = async () => {
-            const documents = await getDocs(collection(db, 'Event'));
-            let tempEvents = [];
-            documents.forEach((doc) => {
-                tempEvents.push(
-                    <>
-                        <CalendarItem
-                            name={doc.data()?.name}
-                            date={doc.data()?.date}
-                            location={doc.data()?.location}
-                        ></CalendarItem>
-                        <FluxCalendarItem
-                            name={doc.data()?.name}
-                            date={doc.data()?.date}
-                            location={doc.data()?.location}
-                        ></FluxCalendarItem>
+    const getEvents = async () => {
+        const documents = await getDocs(collection(db, 'Event'));
+        let tempMonths = [];
+        documents.forEach((doc) => {
+            const cleanDate = new Date(doc.data()?.date?.seconds * 1000);
+            const foundMonth = tempMonths.find(element => element.month === cleanDate.getMonth() && element.year === cleanDate.getFullYear())
+            if (foundMonth) {
+                foundMonth.schedule.push({
+                    key: doc.id,
+                    id: doc.id,
+                    name: doc.data().name,
+                    date: cleanDate,
+                    location: doc.data().location,
+                    callRerender: getEvents
+                })
+            } else {
+                tempMonths.push({
+                    month: cleanDate.getMonth(),
+                    year: cleanDate.getFullYear(),
+                    schedule: [
+                        {
+                            key: doc.id,
+                            id: doc.id,
+                            name: doc.data().name,
+                            date: cleanDate,
+                            isAllDay: doc.data()?.isAllDay,
+                            location: doc.data().location,
+                            callRerender: getEvents
+                        }
+                    ]
+                })
+            }
+        });
+        setEvents(tempMonths);
+    }
 
-                    </>
-                )
-            });
-            setEvents(tempEvents);
-        }
+    useEffect(() => {
         getEvents();
     }, []);
 
     return (
         <div className="calendar-container">
             <h1>Calendar</h1>
-            <h2>May 2023</h2>
-            <button>Add Event</button>
-            {events}
-            {/*<table>
-                <tbody>
-                    <tr>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                    </tr>
-                    <tr>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                    </tr>
-                    <tr>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                    </tr>
-                    <tr>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                    </tr>
-                    <tr>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                        <td><button className="calendarDay"></button></td>
-                    </tr>
-                </tbody>
-    </table>*/}
-
+            <button className='calendar-edit-buttons' onClick={async () => {
+                //Need to ensure no collisions
+                const id = Math.random().toString();
+                await setDoc(doc(db, 'Event', id), {
+                    name: '',
+                    location: '',
+                    date: new Date()
+                });
+                getEvents();
+            }}>Add Event</button>
+            {events.sort((a, b) => {
+                return a.year - b.year === 0 ? a.month - b.month : a.year - b.year;
+            }).map((months) => {
+                return <CalendarMonth
+                    month={months.month}
+                    year={months.year}
+                    events={months.schedule}
+                ></CalendarMonth>
+            })}
         </div>
     )
 }
+
+export default Calendar;

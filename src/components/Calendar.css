@@ -3,23 +3,38 @@
     align-items: center;
 }
 
-.calendarDay {
-    background: none;
-    border: 5;
-    height: 100px;
-    width: 100px;
+.calendar-event-info {
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
 }
 
-#event-info {
-    border: 0.5px solid black;
-    /* justify-content: center;
-    align-items: center; */
+.calendar-event-main-body {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    background-color: #eee;
+    border-radius: 15px;
 }
 
-#event-info-left {
-    width: 500px;
+.calendar-event-info-left {
+    width: 45%;
 }
 
-#event-info-right {
-    width: 500px;
+.calendar-event-info-right {
+    width: 45%;
+}
+
+.calendar-edit-buttons {
+    margin: 10px;
+    height: 4vh;
+    padding: 1vh;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.calendar-edit-buttons:hover {
+    transform: translateY(-5px);
 }
