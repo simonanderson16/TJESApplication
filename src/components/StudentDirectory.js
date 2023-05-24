@@ -4,15 +4,24 @@ import { useState, useEffect } from 'react'
 import { getFirestore, getDocs, collection, where, query, getDoc } from "firebase/firestore";
 import { db } from "../firebase.js";
 import { getAuth } from "firebase/auth";
+import { getUser } from "../App";
 
-export default function StudentDirectory({ userCollection, isAdmin }) {
+export default function StudentDirectory({ userCollection }) {
     //TODO: Add search bar that searches students by email
-    // TODO: Make "add student" which is only viewable by an admin
     const [searchString, setSearchString] = useState('')
     const [filterSearch, setFilterSearch] = useState(false);
     const [filteredCollection, setFilteredCollection] = useState([]);
     const [buildingUser, setBuildingUser] = useState(false);
-  
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    const getIsAdmin = async () => {
+        const response = await getUser();
+        if (response?.userObject?.userType === 'admin')
+            setIsAdmin(true);
+        else
+            setIsAdmin(false);
+    }
+
     //function where if user hits enter on textarea, 
     const handleSearch = async (event) => {
         setSearchString(event.target.value);
@@ -22,9 +31,9 @@ export default function StudentDirectory({ userCollection, isAdmin }) {
         if (event.key === "Enter") {
             // Prevent page refresh
             // SRC: https://stackoverflow.com/questions/50193227/basic-react-form-submit-refreshes-entire-page
-            event.preventDefault(); 
+            event.preventDefault();
             let nameArray = searchString.split(' ')
-            const q = query(collection(db, "User"),where("firstName", "in", nameArray), where("userType", "==", "student" ) );
+            const q = query(collection(db, "User"), where("firstName", "in", nameArray), where("userType", "==", "student"));
             let data = []
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
@@ -43,13 +52,15 @@ export default function StudentDirectory({ userCollection, isAdmin }) {
         }
     }
 
+    getIsAdmin();
+
     return (
         <div className="student-directory-container">
             <h1>Student Directory</h1>
             <button hidden={!isAdmin} onClick={() => setBuildingUser(true)}>Add Student</button>
             <div hidden={!buildingUser}>
                 <UserBuilder
-                    userType={'student'}
+                    isStudent={true}
                 ></UserBuilder>
             </div>
             <div className="Search">
@@ -65,13 +76,13 @@ export default function StudentDirectory({ userCollection, isAdmin }) {
                 </form>
                 {searchString}
             </div>
-            {filterSearch === true ? 
-            (<div className = "studentContainer">
-                <StudentCollectionList studentCollection={filteredCollection}/>
-            </div>):
-            (<div className = "studentContainer">
-                <StudentCollectionList studentCollection={userCollection.filter((user) => user.userType==='student')}/>
-            </div>)}
+            {filterSearch === true ?
+                (<div className="studentContainer">
+                    <StudentCollectionList studentCollection={filteredCollection} />
+                </div>) :
+                (<div className="studentContainer">
+                    <StudentCollectionList studentCollection={userCollection.filter((user) => user.userType === 'student')} />
+                </div>)}
         </div>
     )
 }
