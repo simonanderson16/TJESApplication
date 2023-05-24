@@ -13,9 +13,12 @@ import { collection, doc, getDoc, getDocs, query, where } from "firebase/firesto
 import { getAuth } from "firebase/auth";
 import { useState, useEffect } from 'react';
 
+let user;
+
 function App() {
   const collectionName = 'User';
   const [userCollection, setUserCollection] = useState([]);
+
 
   useEffect(() => {
     getDocs(collection(db, collectionName))
@@ -34,7 +37,8 @@ function App() {
       return false;
     }
     const response = await getDocs(query(collection(db, 'User'), where('uid', "==", getAuth().currentUser.uid.toString())));
-    return response.docs?.[0].data().userType === 'admin';
+    user = { id: response.docs?.[0].id, userObject: response.docs?.[0].data()};
+    return user.userObject.userType === 'admin';
   }
 
   let isAdmin = getIsAdmin();
@@ -89,3 +93,4 @@ function App() {
 }
 
 export default App;
+export { user };
