@@ -72,6 +72,8 @@ function Calendar() {
                 <FullCalendar
                     plugins={[dayGridPlugin]}
                     initialView="dayGridMonth"
+                    contentHeight={650}
+                    aspectRatio={2}
                     events={events}
                     eventClick={(info) => setActiveEvent(
                         <CalendarItem

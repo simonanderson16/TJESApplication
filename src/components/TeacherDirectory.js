@@ -59,7 +59,8 @@ export default function TeacherDirectory({ userCollection }) {
         backgroundColor: 'rgb(34, 34, 78)',
         color: '#eee',
         cursor: 'pointer',
-        transition: 'all 0.4s ease'
+        transition: 'all 0.4s ease',
+        margin: '20px'
     };
     getIsAdmin();
     
@@ -77,7 +78,7 @@ export default function TeacherDirectory({ userCollection }) {
             </div>
             <div className="Search">
                 <form >
-                    <label> Search by name </label>
+                    <label> Search Teacher by Name: </label>
                     <input
                         type="text"
                         required

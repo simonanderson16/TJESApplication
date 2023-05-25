@@ -59,7 +59,8 @@ export default function StudentDirectory({ userCollection }) {
         backgroundColor: 'rgb(34, 34, 78)',
         color: '#eee',
         cursor: 'pointer',
-        transition: 'all 0.4s ease'
+        transition: 'all 0.4s ease',
+        margin: '20px'
       };
     getIsAdmin();
 
@@ -72,7 +73,8 @@ export default function StudentDirectory({ userCollection }) {
                             backgroundColor: 'rgb(34, 34, 78)',
                             color: '#eee',
                             cursor: 'pointer',
-                            transition: 'all 0.4s ease'}} 
+                            transition: 'all 0.4s ease',
+                            margin: '20px'}} 
                     hidden={!isAdmin} onClick={() => setBuildingUser(true)}>Add Student</button>
             <div hidden={!buildingUser}>
                 <UserBuilder
@@ -81,7 +83,7 @@ export default function StudentDirectory({ userCollection }) {
             </div>
             <div className="Search">
                 <form >
-                    <label> Search by name </label>
+                    <label> Search Student by Name: </label>
                     <input
                         type="text"
                         required
