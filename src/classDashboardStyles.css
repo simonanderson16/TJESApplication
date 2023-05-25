@@ -55,7 +55,7 @@
     transform: translateY(-5px);
 }
 
-.add-class-box {
+.add-class-box, .delete-class-box {
     background-color: #eee;
     display: flex;
     flex-direction: column;
@@ -73,4 +73,12 @@
 
 .admin-class-search {
     margin-top: 2vh;
+}
+
+.admin-class-dashboard-button {
+    margin: 10px;
+}
+
+.cancel-and-submit-buttons {
+    display: flex;
 }

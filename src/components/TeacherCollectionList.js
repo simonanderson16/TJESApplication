@@ -1,7 +1,31 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Teacher from './Teacher'
+import { FaTrashAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { getUser } from "../App";
+import { doc, deleteDoc } from "firebase/firestore";
+import {db} from "../firebase.js"
+
 function TeacherCollectionList({teacherCollection}) {
-  console.log("result",teacherCollection)
+  const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+
+  const getIsAdmin = async () => {
+    const response = await getUser();
+    if (response?.userObject?.userType === 'admin')
+        setIsAdmin(true);
+    else
+        setIsAdmin(false);
+  }
+
+
+    
+  const deleteTeacher = async (e) =>{
+    await deleteDoc(doc(db, "User", e.id));// delete student doc
+    navigate(0); // Refresh the page
+  }
+  getIsAdmin();
   return (
     <>
       {teacherCollection.length === 0 ? 
@@ -18,7 +42,18 @@ function TeacherCollectionList({teacherCollection}) {
                     address = {teacherCollection[key].address}
                     birthday = {teacherCollection[key].birthday}
                 />
+                <div hidden={!isAdmin} >
+                  <FaTrashAlt  
+                    color = 'rgb(34,34,78)' 
+                    size='30px' 
+                    cursor='pointer'
+                    onMouseOver={({target})=>target.style.color="red"}
+                    onMouseOut={({target})=>target.style.color = 'rgb(34,34,78)' } 
+                    onClick={() => deleteTeacher(teacherCollection[key])} 
+                  />
+                </div>
             </div>  
+            
         )}
         </>
       )}
