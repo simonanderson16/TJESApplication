@@ -1,10 +1,9 @@
-import { db } from '../../firebase';
+import { db } from '../firebase';
 import { doc, deleteDoc, setDoc } from 'firebase/firestore';
 import { useState } from 'react';
 
-function CalendarItem({ id, name, date, isAllDay, location, callRerender, isAdmin }) {
-
-    const [editMode, setEditMode] = useState(date?.getFullYear() === 2000 ? true : false);
+function CalendarItem({ id, name, date, isAllDay, location, callRerender, isAdmin, isEdit }) {
+    const [editMode, setEditMode] = useState(isEdit);
     const [allDay, setAllDay] = useState(isAllDay ?? false);
 
     return (
@@ -40,16 +39,19 @@ function CalendarItem({ id, name, date, isAllDay, location, callRerender, isAdmi
                 </div>
                 <div hidden={!editMode}>
                     <button className='calendar-edit-buttons' onClick={async () => {
-                        await setDoc(doc(db, 'Event', id), {
-                            name: document.getElementById('nameInput' + id).value,
-                            date: new Date(document.getElementById('dateInput' + id).value + ' ' + document.getElementById('timeInput' + id).value),
-                            location: document.getElementById('locationInput' + id).value,
-                            isAllDay: allDay
-                        });
+                        const nameField = document.getElementById('nameInput' + id).value;
+                        if (nameField !== '') {
+                            await setDoc(doc(db, 'Event', id), {
+                                name: nameField,
+                                date: new Date(document.getElementById('dateInput' + id).value + ' ' + document.getElementById('timeInput' + id).value),
+                                location: document.getElementById('locationInput' + id).value,
+                                isAllDay: allDay
+                            });
+                        }
                         setEditMode(false);
                         callRerender();
                     }}>Save</button>
-                    <button className='calendar-edit-buttons' onClick={() => { setEditMode(false) }}>Discard</button>
+                    <button className='calendar-edit-buttons' onClick={() => { callRerender(); }}>Discard</button>
                 </div>
             </div>
         </div>

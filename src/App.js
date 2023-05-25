@@ -3,7 +3,7 @@ import HomePage from './components/HomePage';
 import ClassDashboard from './components/ClassDashboard';
 import StudentDirectory from './components/StudentDirectory';
 import TeacherDirectory from './components/TeacherDirectory';
-import Calendar from './components/Calendar/Calendar';
+import Calendar from './components/Calendar';
 import Navbar from './components/Navbar';
 import Login from './components/Login'
 

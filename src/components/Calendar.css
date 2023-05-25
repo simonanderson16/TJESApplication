@@ -38,3 +38,11 @@
 .calendar-edit-buttons:hover {
     transform: translateY(-5px);
 }
+
+.calendar-object {
+    margin: 30px;
+}
+
+.calendar-editing-space {
+    padding: 10px;
+}
