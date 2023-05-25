@@ -2,9 +2,10 @@
 import ClassDashboardRow from "./ClassDashboardRow";
 import "../classDashboardStyles.css"
 import { useEffect, useReducer, useRef, useState } from "react";
-import { collection, query, where, getDocs, addDoc, doc } from "firebase/firestore";
+import { collection, query, where, getDocs, addDoc, doc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { getUser } from "../App";
+import { useNavigate } from "react-router-dom";
 
 export default function ClassDashboard({classCollection, gradeCollection, userCollection}) {
 
@@ -12,7 +13,7 @@ export default function ClassDashboard({classCollection, gradeCollection, userCo
     const [userType, setUserType] = useState();
     const [userID, setUserID] = useState();
 
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getUserData = async () => {
@@ -20,7 +21,7 @@ export default function ClassDashboard({classCollection, gradeCollection, userCo
             setCurrentUser(user)
         }
         getUserData();
-        console.log(currentUser)
+        // console.log(currentUser)
     }, [])
 
     useEffect(() => {
@@ -43,7 +44,7 @@ useEffect(() => {
   }
 }, []);
 
-    console.log("current user" , currentUser)
+    // console.log("current user" , currentUser)
     // const userType = currentUser.userObject.userType;
     // const userID = currentUser.id;
     // let userType = 'admin';
@@ -62,7 +63,9 @@ useEffect(() => {
     const [searchString, setSearchString] = useState('');
     const [filterSearch, setFilterSearch] = useState(false);
     const [addingClass, setAddingClass] = useState(false);
+    const [deletingClass, setDeletingClass] = useState(false);
     const [currentTeacherSelection, setCurrentTeacherSelection] = useState();
+    const [currentDeleteClassSelection, setCurrentDeleteClassSelection] = useState();
     const [addClassName, setAddClassName] = useState();
     const [filteredCollection, setFilteredCollection] = useState([])
 
@@ -70,8 +73,16 @@ useEffect(() => {
         setAddingClass(true);
       };
 
+      const handleDeleteClassButton = (event) => {
+        setDeletingClass(true);
+      };
+
       const handleSelectChange = (event) => {
         setCurrentTeacherSelection(event.target.value);
+      };
+
+      const handleClassSelectChange = (event) => {
+        setCurrentDeleteClassSelection(event.target.value);
       };
 
       const handleSetClassName = (event) => {
@@ -84,12 +95,9 @@ useEffect(() => {
         const classRef = await addDoc(collection(db, "Class"), {
           name: className,
           teacher: teacherRef,
+          grades: [],
         });
-      
-        // Add a subcollection "Grades" to the newly created class document
-        await addDoc(collection(classRef, "Grades"), {
-            // empty for now
-        });
+        navigate(0); // refresh page
       };
 
       const handleSubmitButton = (event) => {
@@ -100,6 +108,23 @@ useEffect(() => {
         } else {
             console.log(currentTeacherSelection);
             addClass(addClassName, currentTeacherSelection);
+        }
+      };
+
+      const deleteClass = async (classID) => {
+        const classRef = doc(db, "Class", classID);
+        await deleteDoc(classRef);
+        navigate(0); // refresh page
+      };
+
+
+      const handleConfrimDeleteButton = (event) => {
+        if(currentDeleteClassSelection === '' || !currentDeleteClassSelection) {
+            console.log("No selection")
+            return;
+        } else {
+            console.log("Class to be deleted: ", currentDeleteClassSelection);
+            deleteClass(currentDeleteClassSelection);
         }
       };
 
@@ -147,7 +172,8 @@ useEffect(() => {
             <h1>{userType==='admin' ? "All Classes" : "My Classes"}</h1>
             {userType==='admin' ?
             <> 
-            <button onClick={handleAddClassButton}>Add Class</button>
+            <button className='admin-class-dashboard-button' onClick={handleAddClassButton}>Add Class</button>
+            <button className='admin-class-dashboard-button' onClick={handleDeleteClassButton}>Delete Class</button>
             </>
             : null}
             {addingClass ? 
@@ -164,7 +190,27 @@ useEffect(() => {
                         {teacherCollection.map((teacher, index) => {return <option key={index} value={teacher.id}>{teacher.firstName + " " + teacher.lastName}</option>})}
                     </select>
                 </div>
-                <button onClick={handleSubmitButton}>Submit</button>
+                <div className="cancel-submit-buttons">
+                    <button className='admin-class-dashboard-button' onClick={() => setAddingClass(false)}>Cancel</button>
+                    <button className='admin-class-dashboard-button' onClick={handleSubmitButton}>Submit</button>
+                </div>
+            </div>)
+            :
+            (null)}
+            {deletingClass ? 
+            (<div className="delete-class-box" style={{backgroundColor: "#eee"}}>
+                <h3>Delete Class</h3>
+                <div className="delete-class-dropdown">
+                    <p>Class:</p>
+                    <select value={currentDeleteClassSelection} onChange={handleClassSelectChange}>
+                        <option value={null}>{''}</option>
+                        {classCollection.map((classItem, index) => {return <option key={index} value={classItem.id}>{classItem.name}</option>})}
+                    </select>
+                </div>
+                <div className="cancel-submit-buttons">
+                    <button className='admin-class-dashboard-button' onClick={() => setDeletingClass(false)}>Cancel</button>
+                    <button className='admin-class-dashboard-button' onClick={handleConfrimDeleteButton}>Confirm Delete</button>
+                </div>
             </div>)
             :
             (null)}
