@@ -10,9 +10,20 @@ export default function ClassPageNames({document, userCollection, admin}){
     const listOfStu = []
     const actualListOfStu = []
     const studentData = []
+    const testIdea = []
+    let totalGrade = 0;
+    function averageGrade(){
+        for(let i=0; i < document.grades.length; i++){
+            totalGrade += document.grades[i].grade
+        }
+        totalGrade = totalGrade/document.grades.length
+        return totalGrade
+    }
+
     function getTeacherName(){
         if(userCollection.length != 0){
             if(document){
+            averageGrade()
             let teacherId = document.teacher.id
             for(let i = 0; i < userCollection.length; i++){
                 if(userCollection[i].id === teacherId){
@@ -37,6 +48,7 @@ export default function ClassPageNames({document, userCollection, admin}){
                 for(let k = 0; k < userCollection.length;k++){
                     if(userCollection[k].id === listOfStu[j]){
                         actualListOfStu.push(userCollection[k].firstName + " " + userCollection[k].lastName + ", Grade: " + document.grades[dictGrade[userCollection[k].id]].grade);
+                        testIdea.push({name: userCollection[k].firstName + " " + userCollection[k].lastName, grade: document.grades[dictGrade[userCollection[k].id]].grade })
                         dictId[(userCollection[k].id).toString()] = k
                         
                     }
@@ -44,7 +56,8 @@ export default function ClassPageNames({document, userCollection, admin}){
 
             }
         }
-        return actualListOfStu
+        console.log(testIdea)
+        return testIdea
     }
     /*
     function listOfStudents(){
@@ -91,10 +104,11 @@ export default function ClassPageNames({document, userCollection, admin}){
         <>
             <h1 style={{ display: "inline-block"}}> {classTitle()}<br></br>{getTeacherName()}</h1>
             <br></br>
+            Average Grade of Class: {totalGrade} 
             <h3>Students:</h3>
             {testListOfStudents().map((item,index) => {
                 return <div key={index}>
-                    <li>{item}</li>
+                    <li>{item.name} {item.grade}</li>
                 </div>
             } )}
             <br></br>

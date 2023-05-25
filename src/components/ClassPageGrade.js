@@ -8,6 +8,7 @@ export default function ClassPageGrade({document,dictGrade,dictId,userCollection
     const [currentStudent, setCurrentStudent] = useState();
     const [editStu, setEditStu] = useState(false);
     const [editSelection, setEditSelection] = useState();
+    let totalGrade;
     const classID = useParams().id;
     const navigate = useNavigate();
     const handleSetChangeGrade = (e) => {
@@ -24,7 +25,7 @@ export default function ClassPageGrade({document,dictGrade,dictId,userCollection
 
     const handleSubmitButton = (e) =>{
         setChangeGrade(false)
-        if(currentStudent === 'Select Student'){
+        if(currentStudent === 'Select Student' || !currentStudent){
             return;
         }
         else{
@@ -55,8 +56,6 @@ export default function ClassPageGrade({document,dictGrade,dictId,userCollection
         navigate(0);
     }
 
-  
-
     const handleSetEditStu = (e) =>{
         setEditStu(true)
     } 
@@ -67,7 +66,7 @@ export default function ClassPageGrade({document,dictGrade,dictId,userCollection
     const handleEditButton = async() => {
         let idGrab;
         setEditStu(false)
-        if(editSelection === 'Select Student'){
+        if(editSelection === '' || !editSelection){
             return;
         }
         for(let i = 0; i < userCollection.length; i++){
@@ -133,7 +132,6 @@ export default function ClassPageGrade({document,dictGrade,dictId,userCollection
             <h3>Add/Remove Students</h3>
             {studentCollection.length > 0 ? (<>
             <p>Student List:</p>
-
             <select value={editSelection} onChange={handleEditSelection}>
                 <option value={null}>Select Student</option>
                 {studentCollection.map((student,index) => {return <option key={index} value={student}>{student}</option>})}
