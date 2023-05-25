@@ -4,7 +4,7 @@ import { db } from "../firebase";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
+import "../classDashboardStyles.css"
 
 export default function ClassDashboardRow({name, teacher}) {
 
