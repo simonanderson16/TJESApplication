@@ -6,8 +6,21 @@ function Student({firstname, lastname, emailAddress, address, birthday}) {
   // TODO: Need to hide some information based on who is logged in 
   return (
     <>
-      <h3>Student: {firstname} {lastname}</h3>
-      <p>{emailAddress}</p>
+      <h3 style = {{fontWeight: 'bold'}}>{firstname} {lastname}</h3>
+      {emailAddress ? 
+        (<p style = {{fontWeight: 'bold'}}>Email: {emailAddress} </p>):
+        (<p style = {{fontWeight: 'bold'}}>Email: N/A</p>)
+      }
+
+      {address ? 
+        (<p style = {{fontWeight: 'bold'}}>Address: {address} </p>):
+        (<p style = {{fontWeight: 'bold'}}>Address: N/A</p>)
+      }
+
+      {birthday ? 
+        (<p style = {{fontWeight: 'bold'}}>Birthday: {birthday} </p>):
+        (<p style = {{fontWeight: 'bold'}}>Birthday: N/A</p>)
+      }
     </>
   )
 }

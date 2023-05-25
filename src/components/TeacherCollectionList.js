@@ -42,8 +42,15 @@ function TeacherCollectionList({teacherCollection}) {
                     address = {teacherCollection[key].address}
                     birthday = {teacherCollection[key].birthday}
                 />
-                <div hidden={!isAdmin} className="delete">
-                  <FaTrashAlt  className="home-button" onClick={() => deleteTeacher(teacherCollection[key])} />
+                <div hidden={!isAdmin} >
+                  <FaTrashAlt  
+                    color = 'rgb(34,34,78)' 
+                    size='30px' 
+                    cursor='pointer'
+                    onMouseOver={({target})=>target.style.color="red"}
+                    onMouseOut={({target})=>target.style.color = 'rgb(34,34,78)' } 
+                    onClick={() => deleteTeacher(teacherCollection[key])} 
+                  />
                 </div>
             </div>  
             

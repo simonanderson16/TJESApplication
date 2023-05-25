@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { getUser } from "../App";
 import { doc, deleteDoc } from "firebase/firestore";
 import {db} from "../firebase.js"
-
+import { IconContext } from "react-icons";
 
 function StudentCollectionList({studentCollection}) {
   //console.log("result",studentCollection)
@@ -29,6 +29,7 @@ function StudentCollectionList({studentCollection}) {
   }
   getIsAdmin();
 
+  //SEE IF DELETE BUTTONS CAN DELETE ALL REFERENCES AS WELL
   return (
     <>
       {studentCollection.length === 0 ? 
@@ -45,8 +46,16 @@ function StudentCollectionList({studentCollection}) {
                     address = {studentCollection[key].address}
                     birthday = {studentCollection[key].birthday}
                 />
+                
                 <div hidden={!isAdmin} className="delete">
-                  <FaTrashAlt  className="home-button" onClick={() => deleteStudent(studentCollection[key])} />
+                  <FaTrashAlt 
+                    color = 'rgb(34,34,78)' 
+                    size='30px' 
+                    cursor='pointer'
+                    onMouseOver={({target})=>target.style.color="red"}
+                    onMouseOut={({target})=>target.style.color = 'rgb(34,34,78)' }
+                    onClick={() => deleteStudent(studentCollection[key])} 
+                  />
                 </div>
             </div>  
         )}
