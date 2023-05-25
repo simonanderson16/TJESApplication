@@ -15,7 +15,7 @@
     justify-content: center;
     background-color: #eee;
     border-radius: 15px;
-    padding: 20px
+    padding: 0 20px 20px 20px
 }
 
 .calendar-event-main-body input{
@@ -55,5 +55,5 @@
 }
 
 .calendar-editing-space {
-    padding: 10px;
+    padding: 0 10px 10px 10px;
 }
