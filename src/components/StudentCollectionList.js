@@ -3,9 +3,8 @@ import Student from './Student'
 import { FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { getUser } from "../App";
-import { doc, deleteDoc,updateDoc, collection, where, query, getDoc, getDocs, arrayRemove } from "firebase/firestore";
+import { doc, deleteDoc,updateDoc, collection, getDocs, arrayRemove } from "firebase/firestore";
 import {db} from "../firebase.js"
-import { IconContext } from "react-icons";
 
 function StudentCollectionList({studentCollection}) {
   //console.log("result",studentCollection)
@@ -27,8 +26,7 @@ function StudentCollectionList({studentCollection}) {
   // Need to delete all references to a student in Class docs  
   const deleteStudent = async (e) =>{
     const classCollection = collection(db, "Class")
-    const studentRef = doc(db,"User",e.id)
-    getDocs(collection(db, "Class"))
+    getDocs(classCollection)
     .then((allDocs) => {
       allDocs.forEach((classdoc) => {
         const classDocRef = classdoc.ref

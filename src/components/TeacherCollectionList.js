@@ -3,8 +3,8 @@ import Teacher from './Teacher'
 import { FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { getUser } from "../App";
-import { doc, deleteDoc } from "firebase/firestore";
 import {db} from "../firebase.js"
+import {doc, deleteDoc,updateDoc, collection, getDocs, arrayRemove } from "firebase/firestore";
 
 function TeacherCollectionList({teacherCollection}) {
   const navigate = useNavigate();
@@ -22,6 +22,16 @@ function TeacherCollectionList({teacherCollection}) {
 
     
   const deleteTeacher = async (e) =>{
+    const classCollection = collection(db, "Class")
+    getDocs(classCollection)
+    .then((allDocs) => {
+      allDocs.forEach((classdoc) => {
+        if (classdoc.data().teacher.id === e.id){
+          console.log(e.id, classdoc.id)
+          deleteDoc(doc(db,"Class",classdoc.id))
+        }
+      })
+    })
     await deleteDoc(doc(db, "User", e.id));// delete student doc
     navigate(0); // Refresh the page
   }
