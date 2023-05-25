@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react'
 import { useParams } from "react-router-dom";
 import {db} from "../firebase"
 import ClassPageNames from "./ClassPageNames"
+import ClassPageGrade from "./ClassPageGrade"
 
 
 
@@ -28,7 +29,6 @@ export default function ClassPage({userCollection, classCollection}){
     const [isUsers, setUsers] = useState([]);
     useEffect(() => {
         const data = async() => {
-            console.log("hey")
             const dataGrab = await getDoc(docRef)
             if(dataGrab.exists()){
                 setDocSnap(dataGrab.data())
@@ -43,27 +43,10 @@ export default function ClassPage({userCollection, classCollection}){
         }
     },[userCollection])
     
-    function studentsGrade(){
 
-    }
-
-    function getTeacherName(){
-        let teacher = classCollection[0].teacher.id
-        for(let i = 0; i < classCollection.length(); i++){
-            if(userCollection[i].id === teacher){
-                return (userCollection[i].firstName + " " + userCollection[i].lastName)
-            }
-        }
-
-    }
 
     //Teacher function
     function editStudentGrade(){
-
-    }
-
-    //Admin function
-    function editTeacher(){
 
     }
 
@@ -76,7 +59,7 @@ export default function ClassPage({userCollection, classCollection}){
         <div className="class-title-teacher-container">
              <ClassPageNames document={isDocSnap} userCollection={isUsers}/>
         </div>
-        <div className="student-list-container">
+        <div className='admin-Controls'>
 
         </div>
     </div>
