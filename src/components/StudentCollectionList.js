@@ -26,10 +26,8 @@ function StudentCollectionList({studentCollection}) {
   // Need to delete all references to a student in Class docs  
   const deleteStudent = async (doc) =>{
     const classCollection = collection(db, "Class")
-
-
     const q = query(classCollection, where("grades", "array-contains", 85))
-    
+    console.log(q)
     // const querySnapshot = await getDocs(q)
     
     // console.log(querySnapshot)
