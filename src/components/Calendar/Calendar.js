@@ -68,7 +68,7 @@ function Calendar() {
                 await setDoc(doc(db, 'Event', id), {
                     name: '',
                     location: '',
-                    date: new Date()
+                    date: new Date("0")
                 });
                 getEvents();
             }}>Add Event</button>
@@ -76,6 +76,7 @@ function Calendar() {
                 return a.year - b.year === 0 ? a.month - b.month : a.year - b.year;
             }).map((months) => {
                 return <CalendarMonth
+                    key={months.month.toString() + months.year}
                     month={months.month}
                     year={months.year}
                     events={months.schedule}
