@@ -5,7 +5,7 @@ function CalendarMonth({ month, year, events, isAdmin }) {
 
     return (
         <>
-            <h2>{monthNames[month] + ' ' + year}</h2>
+            <h2>{year === 2000 ? 'New Event' : monthNames[month] + ' ' + year}</h2>
             {events.sort((a, b) => {
                 return a.date.getDate() - b.date.getDate();
             }).map((event) => {

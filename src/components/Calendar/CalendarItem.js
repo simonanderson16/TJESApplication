@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 function CalendarItem({ id, name, date, isAllDay, location, callRerender, isAdmin }) {
 
-    const [editMode, setEditMode] = useState(false);
+    const [editMode, setEditMode] = useState(date?.getFullYear() === 2000 ? true : false);
     const [allDay, setAllDay] = useState(isAllDay ?? false);
 
     return (

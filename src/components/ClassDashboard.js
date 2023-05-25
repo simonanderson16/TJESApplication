@@ -151,7 +151,7 @@ useEffect(() => {
             </>
             : null}
             {addingClass ? 
-            (<div className="add-class-box">
+            (<div className="add-class-box" style={{backgroundColor: "#eee"}}>
                 <h3>Add Class</h3>
                 <div className="class-name-input">
                     <p>Class Name:</p>
