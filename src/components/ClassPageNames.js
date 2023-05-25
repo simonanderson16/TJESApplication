@@ -2,6 +2,8 @@
 import { collection, query, where, getDocs } from "firebase/firestore";
 import {db} from "../firebase"
 import ClassPageGrade from "./ClassPageGrade"
+import StudentGradeRow from "./StudentGradeRow";
+import "../classPageStyles.css";
 
 export default function ClassPageNames({document, userCollection, admin}){
 
@@ -100,21 +102,27 @@ export default function ClassPageNames({document, userCollection, admin}){
         })
 
     }
+
+    function roundToTwoDecimalPlaces(number) {
+        return Number(number.toFixed(2));
+      }
+
     return (
         <>
-            <h1 style={{ display: "inline-block"}}> {classTitle()}<br></br>{getTeacherName()}</h1>
-            <br></br>
-            Average Grade of Class: {totalGrade} 
-            <h3>Students:</h3>
+            <h1>{classTitle()}</h1>
+            <h2>Teacher: {getTeacherName()}</h2>
+            <h2 className="average-grade">Average: {roundToTwoDecimalPlaces(totalGrade)}</h2>
+            <ClassPageGrade document={document} dictId={dictId} dictGrade={dictGrade} userCollection={userCollection} listId={listOfStu} studentCollection={studentData} admin={admin}/>
+            <div className="student-grade-label">
+                <h2>Student</h2>
+                <h2>Grade</h2>
+            </div>
+            
             {testListOfStudents().map((item,index) => {
                 return <div key={index}>
-                    <li>{item.name} {item.grade}</li>
+                    <StudentGradeRow data={item}/>
                 </div>
             } )}
-            <br></br>
-            <ClassPageGrade document={document} dictId={dictId} dictGrade={dictGrade} userCollection={userCollection} listId={listOfStu} studentCollection={studentData} admin={admin}/>
-            <br></br>
-            
  
         </>
     )
