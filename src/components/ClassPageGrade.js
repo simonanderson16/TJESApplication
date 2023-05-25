@@ -2,8 +2,7 @@ import {useState} from 'react'
 import {doc, updateDoc,getDocs, arrayUnion, arrayRemove, collection, where, query } from "firebase/firestore"
 import {db} from "../firebase"
 import { useNavigate, useParams } from "react-router-dom";
-export default function ClassPageGrade({document,dictGrade,dictId,userCollection, listId, studentCollection}){
-    let userType = 'admin'
+export default function ClassPageGrade({document,dictGrade,dictId,userCollection, listId, studentCollection, admin}){
     const [changeGrade, setChangeGrade] = useState(false)
     const [newGrade, setNewGrade] = useState();
     const [currentStudent, setCurrentStudent] = useState();
@@ -32,7 +31,6 @@ export default function ClassPageGrade({document,dictGrade,dictId,userCollection
             changingGrade(newGrade,currentStudent)
         }
     }
-
     const changingGrade = async(newgrade,id) => {
         const userRef = doc(db,"User",currentStudent)
         const removDict = {
@@ -88,6 +86,7 @@ export default function ClassPageGrade({document,dictGrade,dictId,userCollection
                 await updateDoc(classRef, {
                     grades: arrayRemove(removeDict)
                 })
+                navigate(0);
                 return;
             }
         }
@@ -98,12 +97,13 @@ export default function ClassPageGrade({document,dictGrade,dictId,userCollection
                 await updateDoc(classRef, {
                     grades: arrayUnion(addDict)
                 })
+                navigate(0);
             }
 
     return(
         <>
         
-        {userType==='teacher' ? 
+        {!admin ? 
         <button onClick={handleSetChangeGrade}>Edit Student Grade</button>
         : null}
         {changeGrade ? (<>
@@ -124,7 +124,7 @@ export default function ClassPageGrade({document,dictGrade,dictId,userCollection
         </>)
         : (null)}
 
-        {userType==="admin" ? 
+        {admin ? 
         (<>
         <button onClick={handleSetEditStu}>Edit Student List</button>
         </>) 

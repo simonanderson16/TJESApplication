@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import {db} from "../firebase"
 import ClassPageNames from "./ClassPageNames"
 import ClassPageGrade from "./ClassPageGrade"
-
+import { getUser } from "../App";
 
 
 /*
@@ -22,11 +22,13 @@ const [gradeCollection, setGradeCollection] = useState([])
         }) 
     },[])  
 */
+
 export default function ClassPage({userCollection, classCollection}){
     const [isDocSnap, setDocSnap] = useState();
     const classID = useParams().id;
     const docRef = doc(db, "Class", classID)
     const [isUsers, setUsers] = useState([]);
+    const [isAdmin, setIsAdmin] = useState(false);
     useEffect(() => {
         const data = async() => {
             const dataGrab = await getDoc(docRef)
@@ -43,21 +45,18 @@ export default function ClassPage({userCollection, classCollection}){
         }
     },[userCollection])
     
-
-
-    //Teacher function
-    function editStudentGrade(){
-
+    const getIsAdmin = async () => {
+        const response = await getUser();
+        if (response?.userObject?.userType === 'admin')
+            setIsAdmin(true);
+        else
+            setIsAdmin(false);
     }
-
-    //Admin function
-    function editStudents(){
-
-    }
+    getIsAdmin();
     return(
         <div className="class-page-container">
         <div className="class-title-teacher-container">
-             <ClassPageNames document={isDocSnap} userCollection={isUsers}/>
+             <ClassPageNames document={isDocSnap} userCollection={isUsers} admin={isAdmin}/>
         </div>
         <div className='admin-Controls'>
 

@@ -3,7 +3,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import {db} from "../firebase"
 import ClassPageGrade from "./ClassPageGrade"
 
-export default function ClassPageNames({document, userCollection}){
+export default function ClassPageNames({document, userCollection, admin}){
 
     const dictGrade = {}
     const dictId = {}
@@ -93,12 +93,12 @@ export default function ClassPageNames({document, userCollection}){
             <br></br>
             <h3>Students:</h3>
             {testListOfStudents().map((item,index) => {
-                return <div class ="studentList">
+                return <div key={index}>
                     <li>{item}</li>
                 </div>
             } )}
             <br></br>
-            <ClassPageGrade document={document} dictId={dictId} dictGrade={dictGrade} userCollection={userCollection} listId={listOfStu} studentCollection={studentData}/>
+            <ClassPageGrade document={document} dictId={dictId} dictGrade={dictGrade} userCollection={userCollection} listId={listOfStu} studentCollection={studentData} admin={admin}/>
             <br></br>
             
  

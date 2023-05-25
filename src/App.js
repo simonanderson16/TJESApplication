@@ -35,7 +35,6 @@ function App() {
         allDocs.forEach((doc) => {
           data.push({ ...doc.data(), id: doc.id })
         })
-        console.log(data)
         setUserCollection(data)
       })
   }, [])
@@ -51,7 +50,6 @@ function App() {
         allDocs.forEach((doc) => {
           data.push({ ...doc.data(), id: doc.id })
         })
-        console.log(data)
         setClassCollection(data)
       })
   }, [])
@@ -65,7 +63,6 @@ function App() {
         allDocs.forEach((doc) => {
           data.push({ ...doc.data(), id: doc.id })
         })
-        console.log(data)
         setGradeCollection(data)
       })
   }, [])
