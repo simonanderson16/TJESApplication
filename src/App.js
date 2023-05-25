@@ -14,6 +14,7 @@ import { db } from './firebase.js';
 import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { useState, useEffect } from 'react';
+import Verify from './components/Verify';
 
 const getUser = async () => {
   if (!getAuth().currentUser) {
@@ -81,6 +82,7 @@ function App() {
             userCollection={userCollection} />} />
           <Route path="/teachers" element={<TeacherDirectory userCollection={userCollection} />} />
           <Route path="/calendar" element={<Calendar />} />
+          <Route path="/verify" element={<Verify />} />
           <Route path ="*" element={<PageDoesExist />} />
         </Routes>
       </BrowserRouter>
