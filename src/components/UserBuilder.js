@@ -6,7 +6,7 @@ function UserBuilder({ isStudent }) {
 
     
     return (
-        <>
+        <div className="userbuilder-form-container">
             <form id="userbuilder-form">
                 <p>User First Name:</p>
                 <input id="userbuilder-firstname" />
@@ -29,7 +29,8 @@ function UserBuilder({ isStudent }) {
                                 backgroundColor: 'rgb(34, 34, 78)',
                                 color: '#eee',
                                 cursor: 'pointer',
-                                transition: 'all 0.4s ease'}} 
+                                transition: 'all 0.4s ease',
+                                margin: '10px'}} 
                         id="userbuilder-submit" onClick={async () => {
                     const auth = isStudent ? null : getAuth();
                     const email = document.getElementById('userbuilder-email').value;
@@ -56,10 +57,11 @@ function UserBuilder({ isStudent }) {
                                 backgroundColor: 'rgb(34, 34, 78)',
                                 color: '#eee',
                                 cursor: 'pointer',
-                                transition: 'all 0.4s ease'}}
+                                transition: 'all 0.4s ease',
+                                margin: '10px'}}
                         id="userbuilder-discard" onClick={() => document.getElementById('userbuilder-form').submit()}>Discard</button>
             </div >
-        </>
+        </div>
     );
 }
 

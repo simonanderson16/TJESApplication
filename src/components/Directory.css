@@ -15,13 +15,34 @@
     background-color: rgb(206, 206, 240);
 }
 
-.add-class-box {
-    
-    background-color: rgb(34, 34, 78);
-    /* color: #eee;
+
+.Search input {
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 5px;
+    margin-left: 5px;
+}
+
+.Search {
+    margin:10px
+}
+
+.userbuilder-form-container {
+    background-color: #eee;
+    justify-content: space-between;
+    margin: 2vh;
+    border-radius: 15px;
+    transition: all 0.4s ease;
     cursor: pointer;
-    transition: all 0.4s ease; */
-    
+    border: none;
+    padding: 20px;
+}
+
+.userbuilder-form-container input{
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 5px;
+    margin-left: 5px;
 }
 
 
