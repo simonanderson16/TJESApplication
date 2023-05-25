@@ -52,16 +52,16 @@ export default function TeacherDirectory({ userCollection }) {
         }
     }
 
-    const buttonStyle = {
-        border: 'none',
-        borderRadius: '5px',
-        padding: '10px',
-        backgroundColor: 'rgb(34, 34, 78)',
-        color: '#eee',
-        cursor: 'pointer',
-        transition: 'all 0.4s ease',
-        margin: '20px'
-    };
+    // const buttonStyle = {
+    //     border: 'none',
+    //     borderRadius: '5px',
+    //     padding: '10px',
+    //     backgroundColor: 'rgb(34, 34, 78)',
+    //     color: '#eee',
+    //     cursor: 'pointer',
+    //     transition: 'all 0.4s ease',
+    //     margin: '20px'
+    // };
     getIsAdmin();
     
 
@@ -70,7 +70,7 @@ export default function TeacherDirectory({ userCollection }) {
     return (
         <div className="teacher-directory-container">
             <h1>Teacher Directory</h1>
-            <button style={buttonStyle} hidden={!isAdmin} onClick={() => setBuildingUser(true)}>Add Teacher</button>
+            <button className="add-teacher-button"  hidden={!isAdmin} onClick={() => setBuildingUser(true)}>Add Teacher</button>
             <div hidden={!buildingUser}>
                 <UserBuilder
                     isStudent={false}

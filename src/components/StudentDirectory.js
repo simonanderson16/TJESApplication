@@ -67,14 +67,7 @@ export default function StudentDirectory({ userCollection }) {
     return (
         <div >
             <h1>Student Directory</h1>
-            <button style={{border: 'none',
-                            borderRadius: '5px',
-                            padding: '10px',
-                            backgroundColor: 'rgb(34, 34, 78)',
-                            color: '#eee',
-                            cursor: 'pointer',
-                            transition: 'all 0.4s ease',
-                            margin: '20px'}} 
+            <button className="add-student-button"
                     hidden={!isAdmin} onClick={() => setBuildingUser(true)}>Add Student</button>
             <div hidden={!buildingUser}>
                 <UserBuilder
