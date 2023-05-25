@@ -28,6 +28,9 @@ export default function ClassPageGrade({document,dictGrade,dictId,userCollection
         if(currentStudent === 'Select Student' || !currentStudent){
             return;
         }
+        if(!Number(newGrade)) {
+            return;
+        }
         else{
             changingGrade(newGrade,currentStudent)
         }
@@ -103,43 +106,48 @@ export default function ClassPageGrade({document,dictGrade,dictId,userCollection
         <>
         
         {!admin ? 
-        <button onClick={handleSetChangeGrade}>Edit Student Grade</button>
+        <button className='edit-student-list-button' onClick={handleSetChangeGrade}>Edit Student Grades</button>
         : null}
-        {changeGrade ? (<>
+        {changeGrade ? (<div className='add-remove-container'>
             <h3>Change Grade</h3>
-            <p>New Grade:</p> 
-            <input type="text" placeholder="Enter Grade" onChange={handleNewGrade}></input>
-            <p>Student:</p>
             {userCollection ? (<>
-            <select value={currentStudent} onChange={handleSelectStudentChange}>
-                <option value={null}>Select Student</option>
-                {listId.map((student, index) => {return <option key={index} value={student}>{userCollection[dictId[student]].firstName + " " + userCollection[dictId[student]].lastName}</option>})}
-            </select>
-            <br></br>
-            <button onClick={handleSubmitButton}>Submit Change</button>
+            <div className='input-row'>
+                <h4>Student:</h4>
+                <select className='add-remove-select' value={currentStudent} onChange={handleSelectStudentChange}>
+                    <option value={null}>Select Student</option>
+                    {listId.map((student, index) => {return <option key={index} value={student}>{userCollection[dictId[student]].firstName + " " + userCollection[dictId[student]].lastName}</option>})}
+                </select>
+            </div>
+            <div className='input-row'>
+                <h4>New Grade:</h4> 
+                <input className='add-remove-select' type="text" placeholder="Enter Grade" onChange={handleNewGrade}></input>
+            </div>
+            <button className='edit-student-list-button' onClick={handleSubmitButton}>Submit Change</button>
+
             </>
 
             ): (null)}
-        </>)
+            
+        </div>)
         : (null)}
 
         {admin ? 
         (<>
-        <button onClick={handleSetEditStu}>Edit Student List</button>
+        <button className='edit-student-list-button' onClick={handleSetEditStu}>Edit Student List</button>
         </>) 
         : (null)}
-        {editStu ? (<>
+        {editStu ? (<div className='add-remove-container'>
             <h3>Add/Remove Students</h3>
             {studentCollection.length > 0 ? (<>
-            <p>Student List:</p>
-            <select value={editSelection} onChange={handleEditSelection}>
+            <p>If the chosen student is in the class, they will be removed. Otherwise, they will be added.</p>
+            <select className='add-remove-select' value={editSelection} onChange={handleEditSelection}>
                 <option value={null}>Select Student</option>
                 {studentCollection.map((student,index) => {return <option key={index} value={student}>{student}</option>})}
             </select>
-            <br></br>
-            <button onClick={handleEditButton}>Add/Remove Student</button>
+            <button className='add-remove-submit' onClick={handleEditButton}>Add/Remove Student</button>
+            
             </>) : (null)}
-        </>) 
+        </div>) 
         : (null)}
         </>
     )
