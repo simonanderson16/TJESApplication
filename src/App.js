@@ -6,6 +6,7 @@ import TeacherDirectory from './components/TeacherDirectory';
 import Calendar from './components/Calendar/Calendar';
 import Navbar from './components/Navbar';
 import Login from './components/Login'
+import PageDoesExist from './components/PageDoesExist';
 
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { db } from './firebase.js';
@@ -82,6 +83,7 @@ function App() {
             userCollection={userCollection} />} />
           <Route path="/teachers" element={<TeacherDirectory userCollection={userCollection} />} />
           <Route path="/calendar" element={<Calendar />} />
+          <Route path ="*" element={<PageDoesExist />} />
         </Routes>
       </BrowserRouter>
     </div>
