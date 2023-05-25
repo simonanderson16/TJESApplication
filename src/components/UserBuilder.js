@@ -1,9 +1,11 @@
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 
 function UserBuilder({ isStudent }) {
 
+    const navigate = useNavigate();
     
     return (
         <div className="userbuilder-form-container">
@@ -39,10 +41,11 @@ function UserBuilder({ isStudent }) {
                             userType: isStudent ? 'student' : 'teacher',
                             uid: isStudent ? '' : userCredential.user.uid
                         });
-                        document.getElementById('userbuilder-form').submit();
+                        isStudent ? document.getElementById('userbuilder-form').submit() : navigate('../verify');
                     } catch (error) {
                         document.getElementById('userbuilder-error-message').innerHTML = error;
                     }
+                    
                 }}>Save</button>
                 <button className="add-teacher-button"
                         id="userbuilder-discard" onClick={() => document.getElementById('userbuilder-form').submit()}>Discard</button>

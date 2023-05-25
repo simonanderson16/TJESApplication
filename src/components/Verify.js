@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import './login.css'
 
 
-function Login() {
+function Verify() {
     const auth = getAuth();
 
     const navigate = useNavigate();
@@ -11,7 +11,7 @@ function Login() {
     const signin = async (email, password) => {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password)
-            navigate("/home");
+            navigate("/teachers");
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = "Incorrect Username or Password";
@@ -21,7 +21,7 @@ function Login() {
 
     return (
         <div>
-            <h1>TJES Dashboard Login</h1>
+            <h1>Please reverify your credentials:</h1>
             <div className="login-container">
                 <input className="login-input" placeholder="Email" id="login-input-email" />
                 <div><input className="login-input" type="password" placeholder="Password" id="login-input-password" /></div>
@@ -36,4 +36,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default Verify;

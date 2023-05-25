@@ -1,0 +1,89 @@
+.student-grade-row {
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1vh;
+    height: 10vh;
+    border-radius: 15px;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    border: none;
+    padding: 0 100px 0 100px;
+}
+
+.student-grade-row p {
+    font-size: 1.5rem
+}
+
+.average-grade {
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin-left: 30%;
+    margin-right: 30%;
+    height: 10vh;
+    border-radius: 15px;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    border: none;
+    padding: 0 100px 0 100px;
+}
+
+.edit-student-list-button, .add-remove-submit {
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: rgb(34, 34, 78);
+    color: #eee;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.edit-student-list-button:hover, .add-remove-submit:hover {
+    background-color: rgb(62, 62, 138);
+    color: #eee;
+    cursor: pointer;
+    transform: translateY(-5px);
+}
+
+.add-remove-container {
+    background-color: #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    border-radius: 15px;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    border: none;
+    padding: 0 100px 20px 100px;
+    margin: 1vh
+}
+
+.add-remove-select {
+    margin: 1vh 1vh 1vh 1vh;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.input-row {
+    display: flex;
+}
+
+.student-grade-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1vh 1vh -2vh 1vh;
+    height: 10vh;
+    border-radius: 15px;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    border: none;
+    padding: 0 100px 0 100px;
+}

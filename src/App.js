@@ -3,6 +3,7 @@ import HomePage from './components/HomePage';
 import ClassDashboard from './components/ClassDashboard';
 import StudentDirectory from './components/StudentDirectory';
 import TeacherDirectory from './components/TeacherDirectory';
+import ClassPage from './components/ClassPage';
 import Calendar from './components/Calendar';
 import Navbar from './components/Navbar';
 import Login from './components/Login'
@@ -13,6 +14,7 @@ import { db } from './firebase.js';
 import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { useState, useEffect } from 'react';
+import Verify from './components/Verify';
 
 const getUser = async () => {
   if (!getAuth().currentUser) {
@@ -34,7 +36,6 @@ function App() {
         allDocs.forEach((doc) => {
           data.push({ ...doc.data(), id: doc.id })
         })
-        console.log(data)
         setUserCollection(data)
       })
   }, [])
@@ -50,7 +51,6 @@ function App() {
         allDocs.forEach((doc) => {
           data.push({ ...doc.data(), id: doc.id })
         })
-        console.log(data)
         setClassCollection(data)
       })
   }, [])
@@ -64,7 +64,6 @@ function App() {
         allDocs.forEach((doc) => {
           data.push({ ...doc.data(), id: doc.id })
         })
-        console.log(data)
         setGradeCollection(data)
       })
   }, [])
@@ -76,13 +75,14 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="classes">
-            <Route index element={<ClassDashboard classCollection={classCollection} userCollection={userCollection} gradeCollection={gradeCollection} />} />
-            <Route path='class/:id' element={<HomePage />}></Route>
+            <Route index element={<ClassDashboard classCollection = {classCollection} userCollection = {userCollection} gradeCollection = {gradeCollection}/>}/>
+            <Route path='class/:id' element={<ClassPage userCollection={userCollection} classCollection={classCollection}/>}></Route>
           </Route>
           <Route path="/students" element={<StudentDirectory
             userCollection={userCollection} />} />
           <Route path="/teachers" element={<TeacherDirectory userCollection={userCollection} />} />
           <Route path="/calendar" element={<Calendar />} />
+          <Route path="/verify" element={<Verify />} />
           <Route path ="*" element={<PageDoesExist />} />
         </Routes>
       </BrowserRouter>
