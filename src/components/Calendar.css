@@ -6,7 +6,7 @@
 .calendar-event-info {
     align-items: center;
     justify-content: center;
-    margin: 10px;
+    margin: -20px 10px 10px 10px;
 }
 
 .calendar-event-main-body {
@@ -15,7 +15,15 @@
     justify-content: center;
     background-color: #eee;
     border-radius: 15px;
+    padding: 0 20px 20px 20px
 }
+
+.calendar-event-main-body input{
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 5px;
+}
+
 
 .calendar-event-info-left {
     width: 45%;
@@ -33,8 +41,19 @@
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.4s ease;
+    background-color: rgb(34, 34, 78);
+    color: #eee;
 }
 
 .calendar-edit-buttons:hover {
     transform: translateY(-5px);
+    background-color: rgb(62, 62, 138);
+}
+
+.calendar-object {
+    margin: 30px;
+}
+
+.calendar-editing-space {
+    padding: 0 10px 10px 10px;
 }

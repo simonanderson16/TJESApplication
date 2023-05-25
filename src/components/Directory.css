@@ -1,0 +1,66 @@
+.userContainer {
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1vh;
+    height: 10vh;
+    border-radius: 15px;
+    transition: all 0.4s ease;
+    border: none;
+    padding: 0 100px 0 100px;
+}
+
+.userContainer:hover {
+    background-color: rgb(206, 206, 240);
+}
+
+
+.Search input {
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 5px;
+    margin-left: 5px;
+}
+
+.Search {
+    margin:10px
+}
+
+.userbuilder-form-container {
+    background-color: #eee;
+    justify-content: space-between;
+    margin: 2vh;
+    border-radius: 15px;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    border: none;
+    padding: 20px;
+}
+
+.userbuilder-form-container input{
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 5px;
+    margin-left: 5px;
+}
+
+.add-teacher-button, .add-student-button {
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: rgb(34, 34, 78);
+    color: #eee;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    margin: 20px;
+}
+
+.add-teacher-button:hover, .add-student-button:hover {
+    background-color: rgb(62, 62, 138);
+    color: #eee;
+    cursor: pointer;
+    transform: translateY(-5px);
+}
+
+

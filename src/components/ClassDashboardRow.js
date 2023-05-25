@@ -38,7 +38,7 @@ export default function ClassDashboardRow({name, teacher}) {
 
     return (
         <div className="class-dashboard-row" onClick={goToClassPage}>
-            <p className="class-name">Class Name: {name}</p>
+            <p className="class-name">{name}</p>
             <p className="teacher-name">Teacher: {teacherName}</p>
         </div>
     )

@@ -2,13 +2,14 @@
     background-color: #eee;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     margin: 1vh;
     height: 10vh;
     border-radius: 15px;
     transition: all 0.4s ease;
     cursor: pointer;
     border: none;
+    padding: 0 100px 0 100px;
 }
 
 .class-dashboard-row:hover {
@@ -25,4 +26,59 @@
 
 .class-dashboard-container input {
     margin: 1vh;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.class-dashboard-container select {
+    margin: 1vh 1vh 3vh 1vh;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.class-dashboard-container button {
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: rgb(34, 34, 78);
+    color: #eee;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.class-dashboard-container button:hover {
+    background-color: rgb(62, 62, 138);
+    color: #eee;
+    cursor: pointer;
+    transform: translateY(-5px);
+}
+
+.add-class-box, .delete-class-box {
+    background-color: #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1vh;
+    padding: 3vh;
+    border-radius: 15px;
+    transition: all 0.4s ease;
+    border: none;
+}
+
+.class-name-input, .teacher-dropdown {
+    display: flex;
+}
+
+.admin-class-search {
+    margin-top: 2vh;
+}
+
+.admin-class-dashboard-button {
+    margin: 10px;
+}
+
+.cancel-and-submit-buttons {
+    display: flex;
 }
