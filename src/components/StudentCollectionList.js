@@ -24,7 +24,8 @@ function StudentCollectionList({studentCollection}) {
 
   const deleteStudentInitial = (e) =>{
     setButtonPopup(true)
-    setDeleteStudent(e.id)
+    console.log(e.id)
+    setDeleteStudent(e)
   }
   
 
@@ -77,11 +78,11 @@ function StudentCollectionList({studentCollection}) {
                   />
                   <Popups trigger={buttonPopup} setTrigger={setButtonPopup}>
                     <h1> 
-                      Are you sure you want to delete {studentCollection[key].firstName} {studentCollection[key].lastName}?
+                      Are you sure you want to delete?
                     </h1>
                     <button className="add-student-button"
-                      hidden={!isAdmin} onClick={() => deleteStudentFinal(studentCollection[key])}>
-                        {studentCollection[key].id}
+                      hidden={!isAdmin} onClick={() => deleteStudentFinal()}>
+                        delete
                     </button>
                   </Popups>
                 </div>
