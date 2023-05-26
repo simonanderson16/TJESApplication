@@ -29,7 +29,7 @@ function Verify() {
                     const email = document.getElementById('login-input-email').value;
                     const password = document.getElementById('login-input-password').value;
                     signin(email, password);
-                }}>Sign In</button>
+                }}>Verify</button>
             </div>
             <p id="login-error-message"></p>
         </div>
