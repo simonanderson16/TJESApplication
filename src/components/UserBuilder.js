@@ -32,7 +32,7 @@ function UserBuilder({ isStudent }) {
                     const password = isStudent ? null : document.getElementById('userbuilder-password').value
                     try {
                         const userCredential = isStudent ? null : await createUserWithEmailAndPassword(auth, email, password);
-                        setDoc(doc(db, 'User', Math.random().toString()), {
+                        await setDoc(doc(db, 'User', Math.random().toString()), {
                             firstName: document.getElementById('userbuilder-firstname').value,
                             lastName: document.getElementById('userbuilder-lastname').value,
                             emailAddress: email,
