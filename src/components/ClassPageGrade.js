@@ -28,7 +28,7 @@ export default function ClassPageGrade({document,dictGrade,dictId,userCollection
         if(currentStudent === 'Select Student' || !currentStudent){
             return;
         }
-        if(!Number(newGrade)) {
+        if(!Number(newGrade) || Number(newGrade) < 0) {
             return;
         }
         else{
