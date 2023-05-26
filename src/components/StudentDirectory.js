@@ -85,7 +85,6 @@ export default function StudentDirectory({ userCollection }) {
                         onKeyDown={handleEnteredSearch}
                     />
                 </form>
-                {searchString}
             </div>
             {filterSearch === true ?
                 (<div className="studentContain">
