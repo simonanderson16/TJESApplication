@@ -73,7 +73,7 @@ function TeacherCollectionList({teacherCollection}) {
                     </h1>
                     <button className="add-student-button"
                       hidden={!isAdmin} onClick={() => deleteTeacherFinal()}>
-                        delete
+                        Delete
                     </button>
                   </Popups>
             </div>  
