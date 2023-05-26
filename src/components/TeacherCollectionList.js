@@ -4,11 +4,13 @@ import { FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { getUser } from "../App";
 import {db} from "../firebase.js"
-import {doc, deleteDoc,updateDoc, collection, getDocs, arrayRemove } from "firebase/firestore";
-
+import {doc, deleteDoc, collection, getDocs,} from "firebase/firestore";
+import Popups from './PopupComponents/Popup.js';
 function TeacherCollectionList({teacherCollection}) {
   const navigate = useNavigate();
   const [isAdmin, setIsAdmin] = useState(false);
+  const [buttonPopup, setButtonPopup] = useState(false)
+  const [deleteTeacher, setDeleteTeacher] = useState()
 
 
   const getIsAdmin = async () => {
@@ -19,20 +21,23 @@ function TeacherCollectionList({teacherCollection}) {
         setIsAdmin(false);
   }
 
-
+  const deleteTeacherInitial = (e) =>{
+    setButtonPopup(true)
+    setDeleteTeacher(e)
+  }
     
-  const deleteTeacher = async (e) =>{
+  const deleteTeacherFinal = async () =>{
     const classCollection = collection(db, "Class")
     getDocs(classCollection)
     .then((allDocs) => {
       allDocs.forEach((classdoc) => {
-        if (classdoc.data().teacher.id === e.id){
-          console.log(e.id, classdoc.id)
+        if (classdoc.data().teacher.id === deleteTeacher.id){
+          console.log(deleteTeacher.id, classdoc.id)
           deleteDoc(doc(db,"Class",classdoc.id))
         }
       })
     })
-    await deleteDoc(doc(db, "User", e.id));// delete student doc
+    await deleteDoc(doc(db, "User", deleteTeacher.id));// delete student doc
     navigate(0); // Refresh the page
   }
   getIsAdmin();
@@ -59,9 +64,18 @@ function TeacherCollectionList({teacherCollection}) {
                     cursor='pointer'
                     onMouseOver={({target})=>target.style.color="red"}
                     onMouseOut={({target})=>target.style.color = 'rgb(34,34,78)' } 
-                    onClick={() => deleteTeacher(teacherCollection[key])} 
+                    onClick={() => deleteTeacherInitial(teacherCollection[key])} 
                   />
                 </div>
+                <Popups trigger={buttonPopup} setTrigger={setButtonPopup}>
+                    <h1> 
+                      Are you sure you want to delete this teacher?
+                    </h1>
+                    <button className="add-student-button"
+                      hidden={!isAdmin} onClick={() => deleteTeacherFinal()}>
+                        delete
+                    </button>
+                  </Popups>
             </div>  
             
         )}
