@@ -77,7 +77,7 @@ function StudentCollectionList({studentCollection}) {
                   />
                   <Popups trigger={buttonPopup} setTrigger={setButtonPopup}>
                     <h1> 
-                      Are you sure you want to delete?
+                      Are you sure you want to delete this student?
                     </h1>
                     <button className="add-student-button"
                       hidden={!isAdmin} onClick={() => deleteStudentFinal()}>
