@@ -23,7 +23,7 @@ export default function ClassPageNames({document, userCollection, admin}){
     }
 
     function getTeacherName(){
-        if(userCollection.length != 0){
+        if(userCollection.length !== 0){
             if(document){
             averageGrade()
             let teacherId = document.teacher.id

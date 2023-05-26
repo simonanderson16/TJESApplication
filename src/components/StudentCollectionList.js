@@ -5,12 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { getUser } from "../App";
 import { doc, deleteDoc,updateDoc, collection, getDocs, arrayRemove } from "firebase/firestore";
 import {db} from "../firebase.js"
+import Popups from './PopupComponents/Popup.js';
 
 function StudentCollectionList({studentCollection}) {
   //console.log("result",studentCollection)
   const navigate = useNavigate();
   const [isAdmin, setIsAdmin] = useState(false);
-
+  const [buttonPopup, setButtonPopup] = useState(false)
+  const [deleteStudent, setDeleteStudent] = useState()
 
   const getIsAdmin = async () => {
     const response = await getUser();
@@ -20,18 +22,21 @@ function StudentCollectionList({studentCollection}) {
         setIsAdmin(false);
   }
 
-
+  const deleteStudentInitial = (e) =>{
+    setButtonPopup(true)
+    setDeleteStudent(e.id)
+  }
   
 
   // Need to delete all references to a student in Class docs  
-  const deleteStudent = async (e) =>{
+  const deleteStudentFinal = async () =>{
     const classCollection = collection(db, "Class")
     getDocs(classCollection)
     .then((allDocs) => {
       allDocs.forEach((classdoc) => {
         const classDocRef = classdoc.ref
         classdoc.data().grades.forEach((gradeArrayItem)=>{
-          if (gradeArrayItem.student.id === e.id){
+          if (gradeArrayItem.student.id === deleteStudent.id){
             updateDoc(classDocRef,{
               grades: arrayRemove(gradeArrayItem)
             })            
@@ -39,12 +44,11 @@ function StudentCollectionList({studentCollection}) {
         })
       })
     })
-    await deleteDoc(doc(db, "User", e.id));// delete student doc
+    await deleteDoc(doc(db, "User", deleteStudent.id));// delete student doc
     navigate(0); // Refresh the page
   }
   getIsAdmin();
 
-  //SEE IF DELETE BUTTONS CAN DELETE ALL REFERENCES AS WELL
   return (
     <>
       {studentCollection.length === 0 ? 
@@ -69,8 +73,17 @@ function StudentCollectionList({studentCollection}) {
                     cursor='pointer'
                     onMouseOver={({target})=>target.style.color="red"}
                     onMouseOut={({target})=>target.style.color = 'rgb(34,34,78)' }
-                    onClick={() => deleteStudent(studentCollection[key])} 
+                    onClick={() => deleteStudentInitial(studentCollection[key])} 
                   />
+                  <Popups trigger={buttonPopup} setTrigger={setButtonPopup}>
+                    <h1> 
+                      Are you sure you want to delete {studentCollection[key].firstName} {studentCollection[key].lastName}?
+                    </h1>
+                    <button className="add-student-button"
+                      hidden={!isAdmin} onClick={() => deleteStudentFinal(studentCollection[key])}>
+                        {studentCollection[key].id}
+                    </button>
+                  </Popups>
                 </div>
             </div>  
         )}
