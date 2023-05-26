@@ -87,7 +87,6 @@ export default function TeacherDirectory({ userCollection }) {
                         onKeyDown={handleEnteredSearch}
                     />
                 </form>
-                {searchString}
             </div>
 
             {filterSearch === true ?
