@@ -111,7 +111,7 @@ export default function ClassPageNames({document, userCollection, admin}){
         <>
             <h1>{classTitle()}</h1>
             <h2>Teacher: {getTeacherName()}</h2>
-            <h2 className="average-grade">Average: {roundToTwoDecimalPlaces(totalGrade)}</h2>
+            <h2 className="average-grade">Average: {totalGrade ? roundToTwoDecimalPlaces(totalGrade) :"N/A"}</h2>
             <ClassPageGrade document={document} dictId={dictId} dictGrade={dictGrade} userCollection={userCollection} listId={listOfStu} studentCollection={studentData} admin={admin}/>
             <div className="student-grade-label">
                 <h2>Student</h2>
