@@ -24,7 +24,6 @@ function StudentCollectionList({studentCollection}) {
 
   const deleteStudentInitial = (e) =>{
     setButtonPopup(true)
-    console.log(e.id)
     setDeleteStudent(e)
   }
   
